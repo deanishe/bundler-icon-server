@@ -16,6 +16,9 @@ from __future__ import print_function, unicode_literals
 import sys
 import os
 
-sys.path.insert(0, os.path.dirname(__file__))
+appdir = os.path.abspath(os.path.join(os.path.dirname(__file__)))
+if appdir not in sys.path:
+    sys.path.insert(0, appdir)
 
 from iconserver import app as application
+
