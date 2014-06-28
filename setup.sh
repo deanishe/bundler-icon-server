@@ -11,4 +11,4 @@ echo "Installing required packages ..."
 env/bin/pip install -r requirements.txt
 chdir "$curdir"
 
-echo "Run `run.py` to start the test server at localhost:5000"
+echo 'Run `run.py` to start the test server at localhost:5000'
