@@ -54,4 +54,4 @@ if not app.debug:
     app.logger.setLevel(logging.INFO)
     file_handler.setLevel(logging.INFO)
 
-app.logger.info('MailMarker startup')
+app.logger.info('Iconserver startup')
