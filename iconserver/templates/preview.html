@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/' + font['css']) }}" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/spectrum.css') }}" />
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{{ url_for('.static', filename='js/jquery-1.11.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('.static', filename='js/spectrum.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="sixteen columns">
+	<h1>{{ font['name'] }}</h1>
+	<p>{{ font['name'] }} was created by <a href="{{ font['url'] }}">{{ font['credit'] }}</a>.
+	View the <a href="{{ font['licence'] }}">licence</a>.
+	</p>
+	<p>The following icons are available in {{ font['name'] }}.</p>
+	<p>
+		<label for="colourpicker">Preview colour:</label>
+		<input type="color" name="colourpicker" id="colourpicker">
+		<a href="" id="resetColour">Reset colour</a>
+	</p>
+</div>
+
+{% for char in font['characters']|sort %}
+	<div class="one-third column">
+	<span class="preview {{ font['classgen'](char) }}"></span> {{ char }}
+	</div>
+{% endfor %}
+
+<div class="sixteen columns">
+	<hr>
+	<p>
+		<a href="{{ url_for('index') }}">&laquo; Back</a>
+	</p>
+</div>
+
+<script>
+	$("#colourpicker").spectrum({
+		color: "#444",
+		showInput: true,
+		chooseText: "Use",
+		change: function(colour){
+			$("span.preview").css('color', colour.toHexString())
+		}
+	});
+	$("#resetColour").click(function() {
+		$("#colourpicker").spectrum("set", "#444")
+	});
+</script>
+{% endblock %}

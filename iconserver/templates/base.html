@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<title>{{title}}</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Skeleton -->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/base.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/skeleton.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/layout.css') }}" />
+	<!-- End Skeleton -->
+
+	<!-- Custom styles -->
+	{% block stylesheets %}{% endblock %}
+	<!-- End custom styles -->
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/iconserver.css') }}" />
+
+		<!-- Custom JavaScript -->
+	{% block scripts %}{% endblock %}
+	<!-- End custom JavaScript -->
+
+	<script type="text/javascript" src="{{ url_for('.static', filename='js/iconserver.js') }}"></script>
+
+	<script type="text/javascript">
+
+	</script>
+</head>
+<body>
+	<div id="content" class="container">
+		{% block content %}{% endblock %}
+	</div>
+</body>
+</html>

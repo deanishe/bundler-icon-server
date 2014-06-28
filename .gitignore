@@ -1,0 +1,4 @@
+/log/*
+/env
+/iconserver/static/icons
+/siteconfig.py

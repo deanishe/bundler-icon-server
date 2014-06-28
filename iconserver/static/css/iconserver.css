@@ -1,0 +1,8 @@
+div#content {
+	margin-top: 40px;
+}
+
+span.preview {
+	display: inline-block;
+	width: 60px;
+}
