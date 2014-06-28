@@ -20,8 +20,8 @@ if not app.debug:
             def emit(self, record):
                 msg = self.format(record)
                 cmd = ['mail', '-a',
-                       'From:no-reply@kulturliste-duesseldorf.de',
-                       '-s', 'MailMarker Error',
+                       'From:no-reply@deanishe.net',
+                       '-s', 'Iconserver Error',
                        ', '.join(config.ADMINS)]
                 p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
                 p.stdin.write(msg)
