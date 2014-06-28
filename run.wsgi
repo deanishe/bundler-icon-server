@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!env/bin/python
 # encoding: utf-8
 #
 # Copyright © 2014 deanishe@deanishe.net
