@@ -11,8 +11,8 @@
 
 [class^="icon-"], [class*=" icon-"] {
 	font-family: 'icomoon';
-	font-size: 3em;
-	padding: 16px 0;
+	font-size: 48px;
+	/*padding: 16px 0;*/
 	speak: none;
 	font-style: normal;
 	font-weight: normal;

@@ -13,14 +13,14 @@
 {% block content %}
 <div class="sixteen columns">
 	<h1>{{ font['name'] }}</h1>
-	<p>{{ font['name'] }} was created by <a href="{{ font['url'] }}">{{ font['credit'] }}</a>.
-	View the <a href="{{ font['licence'] }}">licence</a>.
+	<p>{{ font['name'] }} was created by <a href="{{ font['url'] }}" target="_new">{{ font['credit'] }}</a>.
+	View the <a href="{{ font['licence'] }}" target="_new">licence</a>.
 	</p>
-	<p>The following icons are available in {{ font['name'] }}.</p>
 	<p>
 		<label for="colourpicker">Preview colour:</label>
 		<input type="color" name="colourpicker" id="colourpicker">
-		<a href="" id="resetColour">Reset colour</a>
+		<button id="resetColour">Reset colour</button>
+		<!-- <a href="" id="resetColour">Reset colour</a> -->
 	</p>
 </div>
 
@@ -38,16 +38,22 @@
 </div>
 
 <script>
+	$("#resetColour").prop("disabled", true);
 	$("#colourpicker").spectrum({
 		color: "#444",
 		showInput: true,
-		chooseText: "Use",
+		chooseText: "Apply",
 		change: function(colour){
-			$("span.preview").css('color', colour.toHexString())
+			$("span.preview").css("color", colour.toHexString());
+			if ( $("#resetColour").prop("disabled") ) {
+				$("#resetColour").prop("disabled", false);
+			}
 		}
 	});
 	$("#resetColour").click(function() {
-		$("#colourpicker").spectrum("set", "#444")
+		$("#colourpicker").spectrum("set", "#444");
+		$("span.preview").css("color", "#444");
+		$("#resetColour").prop("disabled", true);
 	});
 </script>
 {% endblock %}

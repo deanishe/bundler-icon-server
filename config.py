@@ -57,7 +57,7 @@ FONTS = {
         'licence': 'http://scripts.sil.org/OFL',
         # 'woff': 'fontawesome-webfont.woff',
         'css': 'font-awesome.css',
-        'classgen': lambda s: 'fa fa-3x fa-' + s,
+        'classgen': lambda s: 'fa fa-' + s,
         'characters': {
             'adjust': u('\uf042'),
             'adn': u('\uf170'),

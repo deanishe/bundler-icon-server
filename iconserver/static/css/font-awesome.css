@@ -16,8 +16,9 @@
   font-family: FontAwesome;
   font-style: normal;
   font-weight: normal;
+  font-size: 48px;
   /*line-height: 1;*/
-  padding: 16px 0;
+  /*padding: 16px 0;*/
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

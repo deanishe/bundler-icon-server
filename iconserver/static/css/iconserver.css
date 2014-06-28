@@ -1,8 +1,46 @@
 div#content {
 	margin-top: 40px;
+	margin-bottom: 60px;
 }
 
 span.preview {
 	display: inline-block;
 	width: 60px;
+	height: 60px !important;
+}
+
+code {
+	font-family: monospace;
+	background-color: #eee;
+}
+
+/* Tables
+================================================================*/
+
+table {
+	border-collapse: collapse;
+}
+
+tbody tr:nth-child(even) {
+	background-color: #f6f6f6;
+}
+
+tbody tr:nth-child(even) td {
+	border-bottom: 2px solid #eee;
+}
+
+th, td {
+	padding: 5px 8px;
+	border-right: 2px solid #fff;
+	text-align: left;
+}
+
+th {
+	font-weight: bold;
+	background-color: #eee;
+	border-bottom: 2px solid #ccc;
+}
+
+td {
+	border-bottom: 2px solid #fff;
 }
