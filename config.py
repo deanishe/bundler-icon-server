@@ -40,7 +40,7 @@ CACHEURL = None
 # Where the TTF fonts are saved
 FONTDIR = os.path.join(basedir, 'iconserver', 'static', 'fonts')
 
-LOG_PATH = os.path.join(basedir, 'tmp', 'mailmarker.log')
+LOG_PATH = os.path.join(basedir, 'log', 'iconserver.log')
 LOG_SIZE = 1024 * 1024  # 1 MB
 
 # Administrators
