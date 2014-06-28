@@ -44,7 +44,7 @@ LOG_PATH = os.path.join(basedir, 'log', 'iconserver.log')
 LOG_SIZE = 1024 * 1024  # 1 MB
 
 # Administrators
-ADMINS = ['deanishe@deanishe.net']
+ADMINS = []
 
 USE_LOCAL_MAIL = True
 
