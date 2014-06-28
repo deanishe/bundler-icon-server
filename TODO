@@ -2,5 +2,5 @@ General:
 	- Add `multiplier` to config so all icons are roughly the same size
 		Typicons & Entypo are significantly smaller than the others
 Icon generation:
-	- Entypo/air doesn't work! @done(14-06-28 22:45)
-		- Write a test script to verify generation @done(14-06-28 22:45)
+	- Entypo/air doesn't work!
+		- Write a test script to verify generation

@@ -25,10 +25,6 @@ from flask import render_template, url_for, redirect, Response, abort
 import config
 
 
-class IconError(Exception):
-    """Raised if an icon cannot be generated"""
-
-
 class Icon(object):
 
     css_colour = re.compile(r'[a-fA-F0-9]+').match
