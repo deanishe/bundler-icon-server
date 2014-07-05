@@ -44,3 +44,7 @@ th {
 td {
 	border-bottom: 2px solid #fff;
 }
+
+img.allPreview {
+	border: 1px solid blue;
+}

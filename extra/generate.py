@@ -16,6 +16,9 @@ from __future__ import print_function
 
 # from codecs import unicode_escape_decode
 
+FORMAT = 'python'
+FORMAT = 'json'
+
 characters = {}
 
 filename = 'entypo.tsv'
@@ -32,5 +35,10 @@ with open(filename, 'rb') as file:
         name, code = line.split('\t')
         characters[name.lower()] = "u('\\u{}')".format(code[2:])
 
-for name in sorted(characters):
-    print("'{}': {},".format(name, characters[name]))
+if FORMAT == 'python':
+    for name in sorted(characters):
+        print("'{}': {},".format(name, characters[name]))
+
+if FORMAT == 'json':
+    for name in sorted(characters):
+        print('"{}": {},'.format(name, characters[name]))
