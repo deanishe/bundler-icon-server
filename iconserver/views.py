@@ -137,7 +137,7 @@ def error_text(message, status=400):
 
 
 ########################################################################
-# Error handlers
+# Exported views
 ########################################################################
 
 @app.route('/icon/<font>/<colour>/<character>')

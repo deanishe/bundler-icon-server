@@ -39,7 +39,7 @@ if not app.debug:
         mail_handler = SMTPHandler((MAIL_SERVER, MAIL_PORT),
                                    'no-reply@deanishe.net',
                                    config.ADMINS,
-                                   'Fontserver Error',
+                                   'Iconserver Error',
                                    credentials,
                                    (None, None))
 
