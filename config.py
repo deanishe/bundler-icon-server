@@ -15,7 +15,7 @@ import os
 
 from iconserver.font import Font
 
-DEBUG = True
+DEBUG = False
 
 # Default size of icons
 SIZE = 128  # px
@@ -27,6 +27,10 @@ CACHEDIR = os.path.join(basedir, 'iconserver', 'static', 'icons')
 # URL to CACHEDIR
 CACHEURL = None
 # CACHEURL = 'http://localhost:5000/static/icons'
+
+# Maximum size of the icon cache
+# Override this in `siteconfig.py`
+MAX_CACHE_SIZE = 0  # Bytes
 
 # Where JSON configuration files are stored
 CONFDIR = os.path.join(basedir, 'fonts')

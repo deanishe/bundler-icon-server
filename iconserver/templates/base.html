@@ -12,7 +12,7 @@
 	<!-- Skeleton -->
 	<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/base.css') }}" />
 	<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/skeleton.css') }}" />
-	<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/layout.css') }}" />
+	<!-- <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/layout.css') }}" /> -->
 	<!-- End Skeleton -->
 
 	<!-- Custom styles -->
@@ -25,16 +25,13 @@
 	{% block scripts %}{% endblock %}
 	<!-- End custom JavaScript -->
 
-	<script type="text/javascript" src="{{ url_for('.static', filename='js/iconserver.js') }}"></script>
-
-	<script type="text/javascript">
-
-	</script>
 </head>
 <body>
 	<div id="content" class="container">
 		{% block content %}{% endblock %}
-		<footer>
+		<footer class="sixteen columns">
+			by <a href="http://www.deanishe.net/">Dean Jackson</a>&nbsp;&nbsp;|&nbsp;
+			hosted on <a href="https://www.linode.com/?r=4a30af04867ab319eef6c19a4de9b06620c11dc4" target="_new">Linode</a>
 		</footer>
 	</div>
 </body>

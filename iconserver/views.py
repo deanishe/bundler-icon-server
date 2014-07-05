@@ -31,16 +31,14 @@ css_colour = re.compile(r'[a-f0-9]+').match
 ########################################################################
 
 @app.errorhandler(404)
-def error_404(error):
-    return render_template('404.html'), 404
-
-
 @app.errorhandler(500)
-def error_500(error):
-    return render_template('500.html'), 500
+def error_page(error):
+    app.logger.debug('{}\n{}'.format(error.__class__, dir(error)))
+    return render_template('error.html', error=error), error.code
 
 
 def error_text(message, status=400):
+    """Return plain text error message. Used for `API` calls"""
     return Response(message, status, mimetype='text/plain')
 
 
@@ -50,6 +48,14 @@ def error_text(message, status=400):
 
 @app.route('/icon/<font>/<colour>/<character>')
 def get_icon(font, colour, character):
+    """Redirect to static icon path, creating it first if necessary
+
+    :param font: ID of the font, e.g. ``fontawesome``
+    :param colour: CSS colour without preceding ``#``, e.g. ``000``
+        or ``eeeeee``
+    :param character: Name of the character, e.g. ``youtube``
+
+    """
 
     # Normalise arguments to minimise number of cached images
     colour = colour.lower()
@@ -84,6 +90,7 @@ def get_icon(font, colour, character):
 
 @app.route('/preview/<font>')
 def preview(font):
+    """Show preview of all icons/characters available in ``font``"""
     font = config.FONTS.get(font)
     if font is None:
         abort(404)
@@ -91,9 +98,27 @@ def preview(font):
     return render_template('preview.html', font=font)
 
 
+@app.route('/')
+@app.route('/index')
+def index():
+    """Homepage"""
+    return render_template('index.html')
+
+
+# Debugging views
+#-----------------------------------------------------------------------
+
 @app.route('/all')
 @app.route('/all/<colour>')
 def viewall(colour='444'):
+    """Show all characters in all fonts in colour ``colour``.
+
+    Only active if `config.DEBUG` is ``True``
+
+    """
+
+    if not config.DEBUG:
+        abort(404)
     fonts = []
     names = sorted(config.FONTS.keys())
     for name in names:
@@ -106,7 +131,11 @@ def viewall(colour='444'):
     return render_template('viewall.html', rows=rows, colour=colour)
 
 
-@app.route('/')
-@app.route('/index')
-def index():
-    return render_template('index.html')
+@app.route('/error/<int:errnum>')
+def throwerror(errnum):
+    """Throw the specified error to test server error handling"""
+
+    if not config.DEBUG:
+        abort(404)
+
+    abort(errnum)

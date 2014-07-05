@@ -15,10 +15,12 @@ from __future__ import print_function, unicode_literals
 
 import os
 import re
+from time import time
 
 from PIL import Image, ImageFont, ImageDraw
 
 from flask import url_for
+from iconserver import app
 
 import config
 
@@ -40,6 +42,8 @@ class Icon(object):
 
     def save(self):
         """Generate and save the image to the appropriate cache file"""
+        start = time()
+
         image = Image.new("RGBA", (self.size, self.size),
                           color=(0, 0, 0, 0))
 
@@ -95,6 +99,9 @@ class Icon(object):
             os.makedirs(dirpath, 0755)
 
         outimage.save(self._cachepath)
+
+        app.logger.info('Generated `{}` in {:0.4f} s'.format(
+                        self._cachepath, time() - start))
 
     @property
     def path(self):
