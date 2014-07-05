@@ -10,7 +10,7 @@
 
 """Delete old icons
 
-Usage: purge_icons.py /path/to/icons/cache
+Usage: purge_cache.py /path/to/icons/cache
 
 """
 

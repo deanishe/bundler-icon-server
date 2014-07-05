@@ -1,7 +1,8 @@
-General:
-	- Add `multiplier` to config so all icons are roughly the same size
+
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+Archive:
+	- Add `multiplier` to config so all icons are roughly the same size @done(14-07-05 22:19) @project(General)
 		Typicons & Entypo are significantly smaller than the others
-Icon generation:
-	- Entypo/air doesn't work! @done(14-06-28 22:47)
-		- The font is fucked. Disable it! @done(14-06-29 00:53)
-	- Write a test script to verify generation @done(14-06-28 22:47)
+	- The font is fucked. Disable it! @done(14-06-29 00:53) @project(Icon generation)
+	- Write a test script to verify generation @done(14-06-28 22:47) @project(Icon generation)
+	- Entypo/air doesn't work! @done(14-06-28 22:47) @project(Icon generation)
