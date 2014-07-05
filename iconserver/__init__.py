@@ -6,6 +6,9 @@ import config
 app = Flask(__name__)
 app.config.from_object('config')
 
+if config.MAX_CACHE_SIZE == 0:
+    raise ValueError('Set MAX_CACHE_SIZE in siteconfig.py')
+
 from iconserver import views
 
 if not app.debug:

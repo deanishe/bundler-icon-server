@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table>
+<tr>
+	<th>{{ rows[0][0][0] }}</th>
+	<th>{{ rows[0][1][0] }}</th>
+	<th>{{ rows[0][2][0] }}</th>
+	<th>{{ rows[0][3][0] }}</th>
+</tr>
+{% for row in rows %}
+	<tr>
+	{% for item in row %}
+		{% if item %}
+		<td>
+			<img src="{{ url_for('get_icon', font=item[0], colour=colour, character=item[1]) }}" alt="{{ item[1] }}" title="{{ item[1] }}" class="allPreview">
+		</td>
+		{% endif %}
+	{% endfor %}
+	</tr>
+{% endfor %}
+</table>
+<div class="sixteen columns">
+	<hr>
+	<p>
+		<a href="{{ url_for('index') }}">&laquo; Back</a>
+	</p>
+</div>
+
+{% endblock %}
