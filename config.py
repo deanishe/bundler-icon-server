@@ -26,6 +26,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 CACHEDIR = os.path.join(basedir, 'iconserver', 'static', 'icons')
 # URL to CACHEDIR
 CACHEURL = None
+# Default (for the dev server)
 # CACHEURL = 'http://localhost:5000/static/icons'
 
 # Maximum size of the icon cache
