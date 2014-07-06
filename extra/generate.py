@@ -16,16 +16,17 @@ from __future__ import print_function
 
 # from codecs import unicode_escape_decode
 
-FORMAT = 'python'
+# FORMAT = 'python'
 FORMAT = 'json'
 
 characters = {}
 
-filename = 'entypo.tsv'
-filename = 'entypo-social.tsv'
-filename = 'icomoon.tsv'
-filename = 'typicons.tsv'
+# filename = 'entypo.tsv'
+# filename = 'entypo-social.tsv'
+# filename = 'icomoon.tsv'
+# filename = 'typicons.tsv'
 filename = 'elusive.tsv'
+
 
 with open(filename, 'rb') as file:
     for line in file:
@@ -33,12 +34,17 @@ with open(filename, 'rb') as file:
         if not line:
             continue
         name, code = line.split('\t')
-        characters[name.lower()] = "u('\\u{}')".format(code[2:])
+        characters[name.lower()] = code
+
 
 if FORMAT == 'python':
     for name in sorted(characters):
-        print("'{}': {},".format(name, characters[name]))
+        print("'{}': '{}',".format(name, characters[name]))
+
 
 if FORMAT == 'json':
+    output = []
     for name in sorted(characters):
-        print('"{}": {},'.format(name, characters[name]))
+        output.append('"{}": "{}",'.format(name, characters[name]))
+
+    print('\n'.join(output).rstrip(','))

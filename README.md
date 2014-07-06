@@ -1,20 +1,20 @@
 # Icon Generator for Alfred Bundler #
 
-This is a backend server for the [Alfred Bundler](https://github.com/shawnrice/alfred-bundler).
+This is a backend server for the [Alfred Bundler][alfred-bundler].
 
-It generates icons from webfonts that contain icons instead of letters, such as [Font Awesome](http://fortawesome.github.io/Font-Awesome/). (It can of course also generate icons from fonts that contain normal letters.)
+It generates icons from webfonts that contain icons instead of letters, such as [Font Awesome][font-awesome]. (It can of course also generate icons from fonts that contain normal letters.)
 
 It is built with Python and Flask and designed to run as a WSGI application behind a proper web server.
 
 ## Installation ##
 
-Clone the repository and run `setup.sh` in the root directory. This will create the virtualenv and install the necessary dependencies (from `requirements.txt`) with `pip`. **Note**: The [Pillow library](http://pillow.readthedocs.org/en/latest/index.html) is required, so please ensure that your system has [the libraries required](http://pillow.readthedocs.org/en/latest/installation.html) to compile Pillow. (The `*-dev` libraries can be removed after installation.)
+Clone the repository and run `setup.sh` in the root directory. This will create the virtualenv and install the necessary dependencies (from `requirements.txt`) with `pip`. **Note**: The [Pillow library][pillow] is required, so please ensure that your system has [the libraries required][pillow-install] to compile Pillow. (The `*-dev` libraries can be removed after installation.)
 
 ## Configuration ##
 
 After installation you **must** edit `siteconfig.py`. This file is not included in the repo, but is created (empty) by `setup.sh`. It overrides the settings in `config.py`. At minimum, you must override `MAX_CACHE_SIZE` to a non-zero number, or the application will not run.
 
-The server includes the [Font Awesome](http://fortawesome.github.io/Font-Awesome/), [Elusive Icons](https://github.com/aristath/elusive-iconfont), [IcoMoon](http://icomoon.io/) and [Typicons](http://typicons.com/) fonts and corresponding JSON configuration files and CSS files.
+The server includes the [Font Awesome][font-awesome], [Elusive Icons][elusive-icons] and [Typicons][typicons] fonts and corresponding JSON configuration files and CSS files.
 
 To add a new font, add the webfont files (TTF, WOFF etc.) to the `iconserver/static/fonts` directory, the CSS file for the webfont (which defines the classes for each icon/character) to `iconserver/static/css` and create a corresponding JSON configuration file in `/fonts`.
 
@@ -52,13 +52,17 @@ All values are required. Their meaning is as follows:
 |--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `id`         | URL-friendly name of the font. **Must** be lowercase, e.g. `fontawesome`, `elusive`                                                                                             |
 | `name`       | User-friendly name  of the font, e.g. `Font Awesome`, `Elusive Icons`                                                                                                           |
-| `ttf`        | The filename, not the path, of the TTF file. The file must be in the `iconserver/static/fonts` directory, e.g. `icomoon.ttf`                                                    |
-| `credit`     | The person/company who created the font. Shown on the preview page, e.g. `Aristeides Stathopoulos`, `IcoMoon.io`.                                                               |
-| `url`        | The URL of the author's homepage. Shown on the preview page, e.g. `http://fortawesome.github.io/Font-Awesome/`, `http://icomoon.io/`                                            |
+| `ttf`        | The filename, not the path, of the TTF file. The file must be in the `iconserver/static/fonts` directory, e.g. `Elusive-Icons.ttf`                                              |
+| `credit`     | The person/company who created the font. Shown on the preview page, e.g. `Aristeides Stathopoulos`, `Dave Gandy`                                                               |
+| `url`        | The URL of the author's homepage. Shown on the preview page, e.g. `http://fortawesome.github.io/Font-Awesome/`, `http://typicons.com/`                                          |
 | `licence`    | The URL of the font's licence, e.g. `http://scripts.sil.org/OFL`                                                                                                                |
 | `css`        | The filename, not the path, of the font's CSS file. The file must be in the `iconserver/static/css` directory, e.g. `typicons.css`, `font-awesome.css`                          |
 | `cssclass`   | A template for the CSS class that should be applied to the `span` element showing the character preview. `{name}` will be replaced with the character name, e.g. `fa fa-{name}` |
 | `characters` | A mapping of the character names to the hex Unicode codepoint, e.g. `e600`, `f01d`. What you would use in CSS as `\<value>` or in Python as `\u<value>`                         |
+
+The JSON file can usually be created easily enough from the font's CSS file (Sublime Text's multiple cursors are a big help here).
+
+To make it a little easier, you can instead generate a TSV file with each line containing the name and the Unicode codepoint of a character, and use the `extra/generate.py` script to generate the JSON `characters` mapping from that.
 
 In most cases, the CSS file for the font will need editing to set the `font-size` to `48px`. The `line-height` attribute may also need changing. See the included CSS files for examples.
 
@@ -106,10 +110,27 @@ It will delete the least recently-accessed icons and then remove any empty direc
 
 ## Licence, Thanks ##
 
-This code is made available under the MIT Licence. The bundled fonts are released under the [SIL Open Font Licence (OFL)](http://scripts.sil.org/OFL).
+This code is made available under the [MIT Licence][mit-licence]. The bundled fonts are released under the [SIL Open Font Licence (OFL)][sil-licence].
 
-|                              Font                             |          Author         |
-|---------------------------------------------------------------|-------------------------|
-| [Elusive Icons](https://github.com/aristath/elusive-iconfont) | Aristeides Stathopoulos |
-| [Font Awesome](http://fortawesome.github.io/Font-Awesome/)    | Dave Gandy              |
-| [Typicons](http://typicons.com/)                              | Stephen Hutchings       |
+It goes without saying that this app would be both pointless and impossible without the awesome work of the fonts' creators.
+
+|              Font              |          Author         |
+|--------------------------------|-------------------------|
+| [Elusive Icons][elusive-icons] | Aristeides Stathopoulos |
+| [Font Awesome][font-awesome]   | Dave Gandy              |
+| [Typicons][typicons]           | Stephen Hutchings       |
+
+## Notes ##
+
+I've tried several other webfonts with this application with lesser or greater success. [Entypo/Entypo Social](http://www.entypo.com/) in particular do not work.
+
+
+
+[alfred-bundler]: https://github.com/shawnrice/alfred-bundler
+[font-awesome]: http://fortawesome.github.io/Font-Awesome/
+[elusive-icons]: https://github.com/aristath/elusive-iconfont
+[typicons]: http://typicons.com/
+[mit-licence]: http://opensource.org/licenses/MIT
+[sil-licence]: http://scripts.sil.org/OFL
+[pillow]: http://pillow.readthedocs.org/en/latest/index.html
+[pillow-install]: http://pillow.readthedocs.org/en/latest/installation.html
