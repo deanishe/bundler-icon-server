@@ -9,7 +9,6 @@ chdir "$here"
 }
 echo "Installing required packages ..."
 env/bin/pip install -r requirements.txt
-chdir "$curdir"
 
 echo "Creating directories ..."
 
@@ -18,8 +17,11 @@ echo "Creating directories ..."
 
 
 [[ ! -f siteconfig.py ]] && {
-	echo "Creating siteconfig.py. Add installation-specific settings here."
-	touch siteconfig.py
+	echo "Creating siteconfig.py"
+	cp siteconfig.sample.py siteconfig.py
 }
 
+chdir "$curdir"
+
 echo 'Run `run.py` to start the test server at localhost:5000'
+echo "Be sure to edit `siteconfig.py` first: the server will not run if you don't."
