@@ -46,7 +46,7 @@
 			<tr>
 				<td><code>font</code></td>
 				<td>The name of the font (see <a href="#fonts">below</a>).</td>
-				<td><code>fontawesome</code>, <code>icomoon</code></td>
+				<td><code>fontawesome</code>, <code>elusive</code></td>
 			</tr>
 			<tr>
 				<td><code>colour</code></td>
@@ -88,8 +88,8 @@ alfred.bundler.misc.sh arrow-circle-left fontawesome e5e5e5</pre>
 				<th>Preview</th>
 			</thead>
 			<tbody>
-				{% for id_ in config.FONTS|sort %}
-					{% with font = config.FONTS[id_] %}
+				{% for id_ in fonts|sort %}
+					{% with font = fonts[id_] %}
 						<tr>
 							<td><a href="{{ font['url'] }}" target="_new">{{ font['name'] }}</a></td>
 							<td><code>{{ id_ }}</code></td>
@@ -114,19 +114,19 @@ alfred.bundler.misc.sh arrow-circle-left fontawesome e5e5e5</pre>
 			<tr>
 				<th>Elusive Icons</th>
 				<th>Font Awesome</th>
-				<th>IcoMoon</th>
+				<!-- <th>IcoMoon</th> -->
 				<th>Typicons</th>
 			</tr>
 			<tr>
 				<td><img src="{{ url_for('get_icon', font='elusive', colour='444', character='adjust') }}" alt="adjust" title="adjust"></td>
 				<td><img src="{{ url_for('get_icon', font='fontawesome', colour='444', character='adjust') }}" alt="adjust" title="adjust"></td>
-				<td><img src="{{ url_for('get_icon', font='icomoon', colour='444', character='contrast') }}" alt="contrast" title="contrast"></td>
+				<!-- <td><img src="{{ url_for('get_icon', font='icomoon', colour='444', character='contrast') }}" alt="contrast" title="contrast"></td> -->
 				<td><img src="{{ url_for('get_icon', font='typicons', colour='444', character='adjust-contrast') }}" alt="adjust-contrast" title="adjust-contrast"></td>
 			</tr>
 			<tr>
 				<td><img src="{{ url_for('get_icon', font='elusive', colour='444', character='inbox') }}" alt="inbox" title="inbox"></td>
 				<td><img src="{{ url_for('get_icon', font='fontawesome', colour='444', character='download') }}" alt="download" title="download"></td>
-				<td><img src="{{ url_for('get_icon', font='icomoon', colour='444', character='download') }}" alt="download" title="download"></td>
+				<!-- <td><img src="{{ url_for('get_icon', font='icomoon', colour='444', character='download') }}" alt="download" title="download"></td> -->
 				<td><img src="{{ url_for('get_icon', font='typicons', colour='444', character='download-outline') }}" alt="download-outline" title="download-outline"></td>
 			</tr>
 		</table>

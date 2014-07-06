@@ -23,6 +23,7 @@ from flask import url_for
 from iconserver import app
 
 import config
+import fonts
 
 
 class Icon(object):
@@ -32,13 +33,13 @@ class Icon(object):
     def __init__(self, font, colour, character, size=None):
         self.font = font
         self.colour = colour
-        self.character = config.FONTS[font].unicode_char(character)
+        self.character = fonts.FONTS[font].unicode_char(character)
         self.size = size or config.SIZE
-        self._ttf = os.path.join(config.FONTDIR, config.FONTS[font]['ttf'])
-        self._icons = config.FONTS[font]['characters']
+        self._ttf = os.path.join(config.FONTDIR, fonts.FONTS[font]['ttf'])
+        self._icons = fonts.FONTS[font]['characters']
         self._cachepath = os.path.join(
             config.CACHEDIR,
-            '{}/{}/{}.png'.format(font, colour, character))
+            '{}/{}/{}-{}.png'.format(font, colour, character, self.size))
 
     def save(self):
         """Generate and save the image to the appropriate cache file"""

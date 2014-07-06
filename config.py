@@ -13,7 +13,6 @@
 
 import os
 
-from iconserver.font import Font
 
 DEBUG = False
 
@@ -28,6 +27,9 @@ CACHEDIR = os.path.join(basedir, 'iconserver', 'static', 'icons')
 CACHEURL = None
 # Default (for the dev server)
 # CACHEURL = 'http://localhost:5000/static/icons'
+
+# Allow API users to specify icon size
+API_ALLOW_SIZE = True
 
 # Maximum size of the icon cache
 # Override this in `siteconfig.py`
@@ -46,15 +48,6 @@ LOG_SIZE = 1024 * 1024  # 1 MB
 ADMINS = []
 
 USE_LOCAL_MAIL = True
-
-FONTS = {}
-
-for filename in os.listdir(CONFDIR):
-    if not filename.endswith('.json'):
-        continue
-    path = os.path.join(CONFDIR, filename)
-    font = Font.from_json(path)
-    FONTS[font['id']] = font
 
 
 from siteconfig import *
