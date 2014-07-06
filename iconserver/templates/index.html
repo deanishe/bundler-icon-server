@@ -7,8 +7,10 @@
 		<ul>
 			<li><a href="#usage">Usage</a>
 				<ul>
+					<li><a href="#bash">Bash bundler</a></li>
+					<li><a href="#misc">Miscellaneous bundler</a></li>
+					<li><a href="#php">PHP bundler</a></li>
 					<li><a href="#python">Python bundler</a></li>
-					<li><a href="#python">Miscellaneous bundler</a></li>
 				</ul>
 			</li>
 			<li><a href="#fonts">Icons/fonts</a></li>
@@ -29,7 +31,7 @@
 	<a name="usage"></a>
 	<h2>Usage</h2>
 
-	<p>All implementations take the same arguments:</p>
+	<p>All implementations return the full local path to the requested icon (downloading it first, if necessary) and take (mostly) the same arguments:</p>
 
 	<p>
 		<table>
@@ -56,25 +58,57 @@
 		</table>
 	</p>
 
+	<a name="bash"></a>
+	<h3>Bash bundler</h3>
+	<p>
+		If you're using the <code>alfred.bundler.sh</code> bundler wrapper, you call <code>__load</code> it with icon name, font name 'icon' and CSS colour, e.g.:
+	</p>
+	<p>
+	<pre>source alfred.bundler.sh
+
+icon_center=$(__load align-center fontawesome icon 000000)
+icon_left=$(__load arrow-circle-left fontawesome icon e5e5e5)</pre>
+	</p>
+
+	<p>('icon' is the type of asset you're requesting.)</p>
+
+
+
+	<a name="misc"></a>
+	<h3>Miscellaneous bundler</h3>
+	<p>
+		If you're using the <code>alfred.bundler.misc.sh</code> bundler wrapper, you call it with icon name, font name 'icon' and CSS colour, e.g.:
+	</p>
+	<p>
+	<pre>alfred.bundler.misc.sh align-center fontawesome icon 000000
+alfred.bundler.misc.sh arrow-circle-left fontawesome icon e5e5e5</pre>
+	</p>
+
+	<p>('icon' is the type of asset you're requesting.)</p>
+
+	<p>It will echo the path of the requested icon to stdout.</p>
+
+	<a name="php"></a>
+	<h3>PHP bundler</h3>
+	<p>
+		Icons are currently not available to users of the PHP bundler. Sorry :(
+	</p>
+
 	<a name="python"></a>
 	<h3>Python bundler</h3>
 	<p>
 		If you're using <code>bundler.py</code>, call the <code>icon()</code> function with icon name, font name and CSS colour, e.g.:
 	</p>
 	<p>
-		<pre>bundler.icon('align-center', 'fontawesome', '000000')
-bundler.icon('arrow-circle-left', 'fontawesome', 'e5e5e5')</pre>
+		<pre>import bundler
+
+icon_centre = bundler.icon('align-center', 'fontawesome', '000000')
+icon_left = bundler.icon('arrow-circle-left', 'fontawesome', 'e5e5e5')</pre>
 	</p>
 
-	<a name="misc"></a>
-	<h3>Miscellaneous bundler</h3>
-	<p>
-		If you're using the <code>alfred.bundler.misc.sh</code> bundler wrapper, you call it with icon name, font name and CSS colour, e.g.:
-	</p>
-	<p>
-	<pre>alfred.bundler.misc.sh align-center fontawesome 000000
-alfred.bundler.misc.sh arrow-circle-left fontawesome e5e5e5</pre>
-	</p>
+	<p><code>bundler.icon()</code> returns the Unicode path to the icon file.</p>
+
+	<p>Please consult the source code for extensive documentation.</p>
 
 	<a name="fonts"></a>
 	<h2>Icons/fonts</h2>
