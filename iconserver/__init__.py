@@ -1,10 +1,25 @@
-from flask import Flask
+#!/usr/bin/env python
+# encoding: utf-8
+#
+# Copyright © 2014 deanishe@deanishe.net
+#
+# MIT Licence. See http://opensource.org/licenses/MIT
+#
+# Created on 2014-07-06
+#
 
+"""
+"""
+
+from flask import Flask
 
 import config
 
 app = Flask(__name__)
 app.config.from_object('config')
+
+if config.MAX_CACHE_SIZE == 0:
+    raise ValueError('Set MAX_CACHE_SIZE in siteconfig.py')
 
 from iconserver import views
 

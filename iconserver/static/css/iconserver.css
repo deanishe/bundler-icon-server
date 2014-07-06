@@ -1,3 +1,4 @@
+
 div#content {
 	margin-top: 40px;
 	margin-bottom: 60px;
@@ -9,9 +10,38 @@ span.preview {
 	height: 60px !important;
 }
 
-code {
-	font-family: monospace;
+pre, code {
+	font-family: "Source Code Pro", "Monaco", "Courier New", monospace;
 	background-color: #eee;
+}
+
+pre {
+	overflow: scroll;
+}
+
+nav {
+	position: fixed;
+	width: 120px;
+}
+
+nav ul {
+	margin-bottom: 0;
+}
+
+nav ul li {
+	display: block;
+	margin: 10px 0;
+}
+
+footer {
+	text-align: center;
+	border-top: 1px solid #d8d7d7;
+	font-size: 10px;
+	padding-top: 4px;
+}
+
+div.errorMsg {
+	text-align: center;
 }
 
 /* Tables
@@ -21,7 +51,7 @@ table {
 	border-collapse: collapse;
 }
 
-tbody tr:nth-child(even) {
+tbody tr:nth-child(odd) {
 	background-color: #f6f6f6;
 }
 
@@ -43,4 +73,46 @@ th {
 
 td {
 	border-bottom: 2px solid #fff;
+}
+
+img.allPreview {
+	border: 1px solid blue;
+}
+
+/* Mobile
+================================================================*/
+
+	/* Mobile/Browser */
+@media only screen and (max-width: 767px) {
+	nav {
+		display: none;
+	}
+}
+
+	/* Mobile Landscape/Browser */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+}
+
+	/* Anything smaller than standard 960 */
+@media only screen and (max-width: 959px) {
+}
+
+
+	/* iPad Portrait Only */
+@media only screen and (min-width: 768px) and (max-width: 959px) and (max-device-width: 1000px) {
+}
+
+	/* Mobile Only */
+@media only screen and (max-width: 767px) and (max-device-width: 1000px) {
+}
+
+	/* Mobile Landscape Only */
+@media only screen and (min-width: 480px) and (max-width: 767px) and (max-device-width: 1000px) {
+}
+
+	/* Anything smaller than standard 960 on a device */
+@media only screen and (max-width: 959px) and (max-device-width: 1000px) {
+    .resize {
+        display: none;
+    }
 }

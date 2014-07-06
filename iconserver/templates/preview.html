@@ -13,8 +13,8 @@
 {% block content %}
 <div class="sixteen columns">
 	<h1>{{ font['name'] }}</h1>
-	<p>{{ font['name'] }} was created by <a href="{{ font['url'] }}" target="_new">{{ font['credit'] }}</a>.
-	View the <a href="{{ font['licence'] }}" target="_new">licence</a>.
+	<p>{{ font['name'] }} was created by <a href="{{ font['url'] }}" target="_blank">{{ font['credit'] }}</a>.
+	View the <a href="{{ font['licence'] }}" target="_blank">licence</a>.
 	</p>
 	<p>
 		<label for="colourpicker">Preview colour:</label>
@@ -26,34 +26,51 @@
 
 {% for char in font['characters']|sort %}
 	<div class="one-third column">
-	<span class="preview {{ font['classgen'](char) }}"></span> {{ char }}
+	<span class="preview {{ font.cssclass(char) }}"></span>
+	 <a href="{{ url_for('get_icon', font=font['id'], colour='444', character=char) }}" class="previewLink">{{ char }}</a>
 	</div>
 {% endfor %}
 
 <div class="sixteen columns">
-	<hr>
 	<p>
-		<a href="{{ url_for('index') }}">&laquo; Back</a>
+		<strong><a href="{{ url_for('index') }}">&laquo; Back</a></strong>
 	</p>
 </div>
 
 <script>
+  // Template URL for preview
+	var previewURL = "{{ url_for('get_icon', font=font['id'], colour='COLOUR', character='CHARACTER') }}";
+
 	$("#resetColour").prop("disabled", true);
 	$("#colourpicker").spectrum({
 		color: "#444",
 		showInput: true,
 		chooseText: "Apply",
 		change: function(colour){
-			$("span.preview").css("color", colour.toHexString());
+			var cssColour = colour.toHexString();
+			$("span.preview").css("color", cssColour);
 			if ( $("#resetColour").prop("disabled") ) {
 				$("#resetColour").prop("disabled", false);
 			}
+			// Change preview links
+			$("a.previewLink").each(function(index) {
+				var url = previewURL.replace('COLOUR', cssColour.replace('#', ''))
+														.replace('CHARACTER', $(this).text());
+				$(this).attr('href', url);
+			});
 		}
 	});
+	// Reset picker, preview colours and preview links
 	$("#resetColour").click(function() {
 		$("#colourpicker").spectrum("set", "#444");
 		$("span.preview").css("color", "#444");
 		$("#resetColour").prop("disabled", true);
+		$("a.previewLink").each(function(index) {
+				var url = previewURL.replace('COLOUR', '444')
+														.replace('CHARACTER', $(this).text());
+				$(this).attr('href', url);
+			});
 	});
+
 </script>
 {% endblock %}
