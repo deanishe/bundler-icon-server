@@ -24,4 +24,4 @@ echo "Creating directories ..."
 chdir "$curdir"
 
 echo 'Run `run.py` to start the test server at localhost:5000'
-echo "Be sure to edit `siteconfig.py` first: the server will not run if you don't."
+echo 'Be sure to edit `siteconfig.py` first, otherwise the server will not run!'

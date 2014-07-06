@@ -12,7 +12,7 @@ Clone the repository and run `setup.sh` in the root directory. This will create 
 
 ## Configuration ##
 
-After installation you **must** edit `siteconfig.py`. This file is not included in the repo, but is created (empty) by `setup.sh`. It overrides the settings in `config.py`. At minimum, you must override `MAX_CACHE_SIZE` to a non-zero number, or the application will not run.
+After installation you **must** edit `siteconfig.py`. This file is not included in the repo, but is created by `setup.sh` (a copy of `siteconfig.sample.py`. It overrides the settings in `config.py`. At minimum, you must override `MAX_CACHE_SIZE` to a non-zero number, or the application will not run.
 
 The server includes the [Font Awesome][font-awesome], [Elusive Icons][elusive-icons] and [Typicons][typicons] fonts and corresponding JSON configuration files and CSS files.
 
