@@ -124,6 +124,8 @@ It goes without saying that this app would be both pointless and impossible with
 
 I've tried several other webfonts with this application with lesser or greater success. [Entypo/Entypo Social](http://www.entypo.com/) in particular do not work.
 
+The content of the server homepage (`iconserver/templates/index.html`) is specifically aimed at users of the [Alfred Bundler][alfred-bundler]. You'll be wanting to change it.
+
 
 
 [alfred-bundler]: https://github.com/shawnrice/alfred-bundler
