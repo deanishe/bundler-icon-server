@@ -33,7 +33,7 @@ css_colour = re.compile(r'[a-f0-9]+').match
 @app.errorhandler(404)
 @app.errorhandler(500)
 def error_page(error):
-    app.logger.debug('{}\n{}'.format(error.__class__, dir(error)))
+    # app.logger.debug('{}\n{}'.format(error.__class__, dir(error)))
     return render_template('error.html', error=error), error.code
 
 
@@ -46,21 +46,33 @@ def error_text(message, status=400):
 # Exported views
 ########################################################################
 
+@app.route('/icon/<font>/<colour>/<character>/<size>')
 @app.route('/icon/<font>/<colour>/<character>')
-def get_icon(font, colour, character):
+def get_icon(font, colour, character, size=None):
     """Redirect to static icon path, creating it first if necessary
 
     :param font: ID of the font, e.g. ``fontawesome``
     :param colour: CSS colour without preceding ``#``, e.g. ``000``
         or ``eeeeee``
     :param character: Name of the character, e.g. ``youtube``
-
+    :param size: Size of the icon in pixels
     """
 
     # Normalise arguments to minimise number of cached images
     colour = colour.lower()
     font = font.lower()
     character = character.lower()
+
+    # Set size to default if size is disabled in API
+    if size is None or not config.API_ALLOW_SIZE:
+        size = config.SIZE
+    else:
+        if size.lower().endswith('.png'):
+            size = size[:-4]
+        try:
+            size = int(size)
+        except ValueError as err:
+            return error_text('invalid size : {}'.format(size), 400)
 
     if not css_colour(colour) or not len(colour) in (3, 6):  # Invalid colour
         return error_text('Invalid colour: {}'.format(colour), 400)
@@ -79,7 +91,7 @@ def get_icon(font, colour, character):
         return error_text('Unknown character: {}'.format(character), 404)
 
     try:
-        icon = Icon(font, colour, character)
+        icon = Icon(font, colour, character, size)
         return redirect(icon.url)
     except ValueError as err:
         if 'color' in err.message:

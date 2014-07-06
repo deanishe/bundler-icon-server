@@ -29,6 +29,9 @@ CACHEURL = None
 # Default (for the dev server)
 # CACHEURL = 'http://localhost:5000/static/icons'
 
+# Allow API users to specify icon size
+API_ALLOW_SIZE = True
+
 # Maximum size of the icon cache
 # Override this in `siteconfig.py`
 MAX_CACHE_SIZE = 0  # Bytes

@@ -38,7 +38,7 @@ class Icon(object):
         self._icons = config.FONTS[font]['characters']
         self._cachepath = os.path.join(
             config.CACHEDIR,
-            '{}/{}/{}.png'.format(font, colour, character))
+            '{}/{}/{}-{}.png'.format(font, colour, character, self.size))
 
     def save(self):
         """Generate and save the image to the appropriate cache file"""

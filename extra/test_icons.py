@@ -22,7 +22,9 @@ from multiprocessing.dummy import Pool
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
-from config import FONTS as fonts
+# from config import FONTS as fonts
+
+from iconserver.app.config import FONTS as fonts
 
 MAX_ICONS = False  # for debugging
 
