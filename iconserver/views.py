@@ -35,7 +35,15 @@ css_colour = re.compile(r'[a-f0-9]+').match
 @app.errorhandler(500)
 def error_page(error):
     # app.logger.debug('{}\n{}'.format(error.__class__, dir(error)))
-    return render_template('error.html', error=error), error.code
+    if not hasattr(error, 'code'):
+        code = 500
+    else:
+        code = error.code
+    if not hasattr(error, 'description'):
+        msg = 'Application error. The administrator has been notified.'
+    else:
+        msg = error.description
+    return render_template('error.html', code=code, message=msg), code
 
 
 def error_text(message, status=400):

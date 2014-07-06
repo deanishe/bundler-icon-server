@@ -53,7 +53,7 @@ All values are required. Their meaning is as follows:
 | `id`         | URL-friendly name of the font. **Must** be lowercase, e.g. `fontawesome`, `elusive`                                                                                             |
 | `name`       | User-friendly name  of the font, e.g. `Font Awesome`, `Elusive Icons`                                                                                                           |
 | `ttf`        | The filename, not the path, of the TTF file. The file must be in the `iconserver/static/fonts` directory, e.g. `Elusive-Icons.ttf`                                              |
-| `credit`     | The person/company who created the font. Shown on the preview page, e.g. `Aristeides Stathopoulos`, `Dave Gandy`                                                               |
+| `credit`     | The person/company who created the font. Shown on the preview page, e.g. `Aristeides Stathopoulos`, `Dave Gandy`                                                                |
 | `url`        | The URL of the author's homepage. Shown on the preview page, e.g. `http://fortawesome.github.io/Font-Awesome/`, `http://typicons.com/`                                          |
 | `licence`    | The URL of the font's licence, e.g. `http://scripts.sil.org/OFL`                                                                                                                |
 | `css`        | The filename, not the path, of the font's CSS file. The file must be in the `iconserver/static/css` directory, e.g. `typicons.css`, `font-awesome.css`                          |
