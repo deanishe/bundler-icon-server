@@ -67,16 +67,19 @@ In most cases, the CSS file for the font will need editing to set the `font-size
 The API is very simple:
 
 ```
-http://www.example.com/icon/<fontname>/<csscolour>/<character-name>[.png]
+http://www.example.com/icon/<fontname>/<csscolour>/<character-name>[/<size>][.png]
 ```
+`fontname`, `csscolour` and `character-name` are mandatory. `size` is optional, as is the `.png` extension.
 
-`fontname` corresponds to the `id` value in the JSON configuration file, `csscolour` is a CSS colour of `xxx` or `xxxxxx` form (without preceding `#`), and `character-name` is the name of a character as specified in the JSON configuration file.
+`fontname` corresponds to the `id` value in the JSON configuration file, `csscolour` is a CSS colour of `xxx` or `xxxxxx` form (without preceding `#`), and `character-name` is the name of a character as specified in the JSON configuration file. `size` is the size of the icon in pixels (all icons are square).
 
 `csscolour` is case-insensitive and may be 3 or 6 characters long.
 
+If `size` is not specified, the value of `SIZE` set in `config.py` or `siteconfig.py` will be used. If `API_ALLOW_SIZE` is set to `False`, the `size` parameter will be ignored and `SIZE` will be used.
+
 All icons are in PNG format. You may append `.png` to the URL if you need to.
 
-The `/icon` endpoint will 302 redirect the client to the static path of the requested icon, generating the icon first if necessary. By default this is the URL `http://www.example.com/static/icons/<fontname>/<colour>/<character-name>.png`, corresponding to directory `iconserver/static/icons`.
+The `/icon` endpoint will 302 redirect the client to the static path of the requested icon, generating the icon first if necessary. By default this is the URL `http://www.example.com/static/icons/<fontname>/<colour>/<character-name>-<size>.png`, corresponding to the directory tree under `iconserver/static/icons`.
 
 You can alter the directory icons are saved to and the corresponding URL with the `CACHEDIR` and `CACHEURL` options in `siteconfig.py` (overriding the defaults in `config.py`).
 
@@ -84,16 +87,13 @@ If `CACHEDIR` and `CACHEURL` are specified, they will be used thus: `(CACHEDIR|C
 
 All arguments are converted to lowercase and the colour is normalised to the 6-character form to ensure each icon is only generated and cached once.
 
-#### Limitations ####
-
-As this application was developed for use with [Alfred 2](http://www.alfredapp.com/), which uses a specific icon size (128 px), the API deliberately doesn't expose a method to specify icon size. Icon size can be freely altered in `config.py`/`siteconfig.py`, and the icon generation code accepts an arbitrary size, but the API doesn't.
-
 ### Examples ###
 
 ```
 http://www.example.com/icon/fontawesome/fff/beer
 http://www.example.com/icon/fontawesome/F0F0F0/beer.png
 http://www.example.com/icon/elusive/010101/briefcase
+http://www.example.com/icon/elusive/000/podcast/1024
 ```
 
 ## Maintenance ##
@@ -103,3 +103,13 @@ The application itself does not monitor or manage the cache size, but the `extra
 Call it with `extra/purge_cache.py path/to/icon/cache/directory` (by default `iconserver/static/icons`) from `cron`.
 
 It will delete the least recently-accessed icons and then remove any empty directories.
+
+## Licence, Thanks ##
+
+This code is made available under the MIT Licence. The bundled fonts are released under the [SIL Open Font Licence (OFL)](http://scripts.sil.org/OFL).
+
+|                              Font                             |          Author         |
+|---------------------------------------------------------------|-------------------------|
+| [Elusive Icons](https://github.com/aristath/elusive-iconfont) | Aristeides Stathopoulos |
+| [Font Awesome](http://fortawesome.github.io/Font-Awesome/)    | Dave Gandy              |
+| [Typicons](http://typicons.com/)                              | Stephen Hutchings       |
