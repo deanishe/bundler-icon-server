@@ -88,8 +88,8 @@ alfred.bundler.misc.sh arrow-circle-left fontawesome e5e5e5</pre>
 				<th>Preview</th>
 			</thead>
 			<tbody>
-				{% for id_ in config.FONTS|sort %}
-					{% with font = config.FONTS[id_] %}
+				{% for id_ in fonts|sort %}
+					{% with font = fonts[id_] %}
 						<tr>
 							<td><a href="{{ font['url'] }}" target="_new">{{ font['name'] }}</a></td>
 							<td><code>{{ id_ }}</code></td>

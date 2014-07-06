@@ -21,6 +21,7 @@ from flask import render_template, redirect, Response, abort
 
 import config
 from icon import Icon
+import fonts
 
 
 css_colour = re.compile(r'[a-f0-9]+').match
@@ -81,13 +82,13 @@ def get_icon(font, colour, character, size=None):
         r, g, b = colour
         colour = '{r}{r}{g}{g}{b}{b}'.format(r=r, g=g, b=b)
 
-    if font not in config.FONTS:
+    if font not in fonts.FONTS:
         return error_text('Unknown font: {}'.format(font), 404)
 
     if character.lower().endswith('.png'):
         character = character[:-4]
 
-    if character not in config.FONTS[font]['characters']:
+    if character not in fonts.FONTS[font]['characters']:
         return error_text('Unknown character: {}'.format(character), 404)
 
     try:
@@ -103,7 +104,7 @@ def get_icon(font, colour, character, size=None):
 @app.route('/preview/<font>')
 def preview(font):
     """Show preview of all icons/characters available in ``font``"""
-    font = config.FONTS.get(font)
+    font = fonts.FONTS.get(font)
     if font is None:
         abort(404)
 
@@ -114,7 +115,7 @@ def preview(font):
 @app.route('/index')
 def index():
     """Homepage"""
-    return render_template('index.html')
+    return render_template('index.html', fonts=fonts.FONTS)
 
 
 # Debugging views
@@ -131,15 +132,15 @@ def viewall(colour='444'):
 
     if not config.DEBUG:
         abort(404)
-    fonts = []
-    names = sorted(config.FONTS.keys())
+    font_list = []
+    names = sorted(fonts.FONTS.keys())
     for name in names:
         l = []
-        font = config.FONTS[name]
+        font = fonts.FONTS[name]
         for c in sorted(font['characters']):
             l.append((name, c))
-        fonts.append(l)
-    rows = map(None, *fonts)
+        font_list.append(l)
+    rows = map(None, *font_list)
     return render_template('viewall.html', rows=rows, colour=colour)
 
 

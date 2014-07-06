@@ -14,7 +14,10 @@
 from __future__ import print_function, unicode_literals
 
 import sys
+import os
 import json
+
+import config
 
 if sys.version < '3':
     from codecs import unicode_escape_decode
@@ -25,6 +28,9 @@ if sys.version < '3':
 else:
     def unicodify(x):
         return x
+
+
+FONTS = {}
 
 
 class Font(dict):
@@ -43,3 +49,11 @@ class Font(dict):
     def cssclass(self, name):
         """Return CSS class for character with name `name`"""
         return self['cssclass'].format(name=name)
+
+
+for filename in os.listdir(config.CONFDIR):
+    if not filename.endswith('.json'):
+        continue
+    path = os.path.join(config.CONFDIR, filename)
+    font = Font.from_json(path)
+    FONTS[font['id']] = font

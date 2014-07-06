@@ -13,7 +13,6 @@
 
 import os
 
-from iconserver.font import Font
 
 DEBUG = False
 
@@ -49,15 +48,6 @@ LOG_SIZE = 1024 * 1024  # 1 MB
 ADMINS = []
 
 USE_LOCAL_MAIL = True
-
-FONTS = {}
-
-for filename in os.listdir(CONFDIR):
-    if not filename.endswith('.json'):
-        continue
-    path = os.path.join(CONFDIR, filename)
-    font = Font.from_json(path)
-    FONTS[font['id']] = font
 
 
 from siteconfig import *

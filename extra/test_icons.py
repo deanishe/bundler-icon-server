@@ -24,7 +24,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 # from config import FONTS as fonts
 
-from iconserver.app.config import FONTS as fonts
+from iconserver.fonts import FONTS as fonts
 
 MAX_ICONS = False  # for debugging
 
