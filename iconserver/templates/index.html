@@ -28,10 +28,12 @@
 		This webservice is a backend service for the <a href="https://github.com/shawnrice/alfred-bundler" target="_new">Alfred bundler</a>.
 	</p>
 
+
+
 	<a name="usage"></a>
 	<h2>Usage</h2>
 
-	<p>All implementations return the full local path to the requested icon (downloading it first, if necessary) and take (mostly) the same arguments:</p>
+	<p>All implementations return the full local path to the requested icon (downloading it first if necessary) and take (mostly) the same arguments:</p>
 
 	<p>
 		<table>
@@ -58,10 +60,12 @@
 		</table>
 	</p>
 
+
+
 	<a name="bash"></a>
 	<h3>Bash bundler</h3>
 	<p>
-		If you're using the <code>alfred.bundler.sh</code> bundler wrapper, you call <code>__load</code> with icon name, font name 'icon' and CSS colour, e.g.:
+		If you're using the <code>alfred.bundler.sh</code> bundler wrapper, you call <code>__load</code> with icon name, font name, 'icon' and CSS colour, e.g.:
 	</p>
 	<p>
 	<pre>source alfred.bundler.sh
@@ -72,12 +76,14 @@ icon_left=$(__load arrow-circle-left fontawesome icon e5e5e5)</pre>
 
 	<p>('icon' is the type of asset you're requesting.)</p>
 
+	<p><code>icon_center</code> and <code>icon_left</code> contain the paths to the respective PNG icon files.</p>
+
 
 
 	<a name="misc"></a>
 	<h3>Miscellaneous bundler</h3>
 	<p>
-		If you're using the <code>alfred.bundler.misc.sh</code> bundler wrapper, you call it with icon name, font name 'icon' and CSS colour, e.g.:
+		If you're using the <code>alfred.bundler.misc.sh</code> bundler wrapper, you call it with icon name, font name, 'icon' and CSS colour, e.g.:
 	</p>
 	<p>
 	<pre>alfred.bundler.misc.sh align-center fontawesome icon 000000
@@ -88,11 +94,15 @@ alfred.bundler.misc.sh arrow-circle-left fontawesome icon e5e5e5</pre>
 
 	<p>It will echo the path of the requested icon to stdout.</p>
 
+
+
 	<a name="php"></a>
 	<h3>PHP bundler</h3>
 	<p>
 		Icons are currently not available to users of the PHP bundler. Sorry :(
 	</p>
+
+
 
 	<a name="python"></a>
 	<h3>Python bundler</h3>
@@ -109,6 +119,9 @@ icon_left = bundler.icon('arrow-circle-left', 'fontawesome', 'e5e5e5')</pre>
 	<p><code>bundler.icon()</code> returns the Unicode path to the icon file.</p>
 
 	<p>Please consult the source code for extensive documentation.</p>
+
+
+
 
 	<a name="fonts"></a>
 	<h2>Icons/fonts</h2>
@@ -134,6 +147,8 @@ icon_left = bundler.icon('arrow-circle-left', 'fontawesome', 'e5e5e5')</pre>
 			</tbody>
 		</table>
 	</p>
+
+
 
 	<a name="examples"></a>
 	<h2>Examples</h2>
@@ -165,6 +180,8 @@ icon_left = bundler.icon('arrow-circle-left', 'fontawesome', 'e5e5e5')</pre>
 			</tr>
 		</table>
 	</p>
+
+
 
 	<a name="info"></a>
 	<h2>More information</h2>
