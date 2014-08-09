@@ -43,19 +43,24 @@
 				<th>Examples</th>
 			</tr>
 			<tr>
-				<td><code>icon</code></td>
-				<td>The name of the icon/character. Use the <a href="#fonts">preview links</a> to view available icons and their names.</td>
-				<td><code>adult</code>, <code>ban-circle</code>, <code>adjust</code>, <code>youtube</code></td>
-			</tr>
-			<tr>
 				<td><code>font</code></td>
 				<td>The name of the font (see <a href="#fonts">below</a>).</td>
 				<td><code>fontawesome</code>, <code>elusive</code></td>
 			</tr>
 			<tr>
-				<td><code>colour</code></td>
-				<td>A CSS colour <strong>without</strong> preceding <code>#</code>. May be 3 or 6 characters, upper- or lowercase.</td>
+				<td><code>icon</code></td>
+				<td>The name of the icon/character. Use the <a href="#fonts">preview links</a> to view available icons and their names.</td>
+				<td><code>adult</code>, <code>ban-circle</code>, <code>adjust</code>, <code>youtube</code></td>
+			</tr>
+			<tr>
+				<td><code>color</code> (optional, default is <code>000000</code>)</td>
+				<td>A CSS color <strong>without</strong> preceding <code>#</code>. May be 3 or 6 characters, upper- or lowercase.</td>
 				<td><code>FFF</code>, <code>e3a2d1</code>, <code>000000</code></td>
+			</tr>
+			<tr>
+				<td><code>alter</code> (optional, default is <code>False</code>)</td>
+				<td>Flag to automatically switch the colour to dark/light depending on the theme background. Thus if you specify a dark <code>color</code> and the user's theme background is also dark, the bundler will automatically use a light icon color.</td>
+				<td><code>True</code>, <code>False</code>, <code>0</code>, <code>1</code></td>
 			</tr>
 		</table>
 	</p>
@@ -65,16 +70,14 @@
 	<a name="bash"></a>
 	<h3>Bash bundler</h3>
 	<p>
-		If you're using the <code>alfred.bundler.sh</code> bundler wrapper, you call <code>__load</code> with icon name, font name, 'icon' and CSS colour, e.g.:
+		If you're using the <code>alfred.bundler.sh</code> bundler wrapper, you call <code>AlfredBundler::icon</code> with font name, icon name and CSS colour, e.g.:
 	</p>
 	<p>
 	<pre>source alfred.bundler.sh
 
-icon_center=$(__load align-center fontawesome icon 000000)
-icon_left=$(__load arrow-circle-left fontawesome icon e5e5e5)</pre>
+icon_center=$(AlfredBundler::icon fontawesome align-center)
+icon_left=$(AlfredBundler::icon fontawesome arrow-circle-left e5e5e5 1)</pre>
 	</p>
-
-	<p>('icon' is the type of asset you're requesting.)</p>
 
 	<p><code>icon_center</code> and <code>icon_left</code> contain the paths to the respective PNG icon files.</p>
 
@@ -83,11 +86,12 @@ icon_left=$(__load arrow-circle-left fontawesome icon e5e5e5)</pre>
 	<a name="misc"></a>
 	<h3>Miscellaneous bundler</h3>
 	<p>
-		If you're using the <code>alfred.bundler.misc.sh</code> bundler wrapper, you call it with icon name, font name, 'icon' and CSS colour, e.g.:
+		If you're using the <code>alfred.bundler.misc.sh</code> bundler wrapper, you call it with 'icon' font name, icon name, CSS colour and <code>0</code>/<code>1</code>, e.g.:
 	</p>
 	<p>
-	<pre>alfred.bundler.misc.sh align-center fontawesome icon 000000
-alfred.bundler.misc.sh arrow-circle-left fontawesome icon e5e5e5</pre>
+	<pre>alfred.bundler.misc.sh icon fontawesome align-center 000000 0
+alfred.bundler.misc.sh icon fontawesome arrow-circle-left e5e5e5 1
+alfred.bundler.misc.sh icon fontawesome arrow-circle-right</pre>
 	</p>
 
 	<p>('icon' is the type of asset you're requesting.)</p>
@@ -99,7 +103,15 @@ alfred.bundler.misc.sh arrow-circle-left fontawesome icon e5e5e5</pre>
 	<a name="php"></a>
 	<h3>PHP bundler</h3>
 	<p>
-		Icons are currently not available to users of the PHP bundler. Sorry :(
+		If you're using the <code>alfred.bundler.php</code> bundler wrapper, call the <code>icon</code>
+		method with font name, icon name, CSS colour and alter flag, e.g.:
+	</p>
+	<p>
+		<pre>$bundler = new AlfredBundler;
+
+  $center = $bundler->icon( 'fontawesome', 'align-center');
+  $left = $bundler->icon( 'fontawesome', 'align-left', 'acc321', TRUE );
+		</pre>
 	</p>
 
 
@@ -107,13 +119,13 @@ alfred.bundler.misc.sh arrow-circle-left fontawesome icon e5e5e5</pre>
 	<a name="python"></a>
 	<h3>Python bundler</h3>
 	<p>
-		If you're using <code>bundler.py</code>, call the <code>icon()</code> function with icon name, font name and CSS colour, e.g.:
+		If you're using <code>bundler.py</code>, call the <code>icon()</code> function with the font name, icon name, CSS colour and alter flag, e.g.:
 	</p>
 	<p>
 		<pre>import bundler
 
-icon_centre = bundler.icon('align-center', 'fontawesome', '000000')
-icon_left = bundler.icon('arrow-circle-left', 'fontawesome', 'e5e5e5')</pre>
+icon_centre = bundler.icon('fontawesome', 'align-center')
+icon_left = bundler.icon('fontawesome', 'arrow-circle-left', 'e5e5e5', True)</pre>
 	</p>
 
 	<p><code>bundler.icon()</code> returns the Unicode path to the icon file.</p>
@@ -144,6 +156,11 @@ icon_left = bundler.icon('arrow-circle-left', 'fontawesome', 'e5e5e5')</pre>
 						</tr>
 					{% endwith %}
 				{% endfor %}
+				<tr>
+					<td>OS X system icons</td>
+					<td><code>system</code></td>
+					<td><a href="{{ url_for('preview_system') }}">View icons</a></td>
+				</tr>
 			</tbody>
 		</table>
 	</p>

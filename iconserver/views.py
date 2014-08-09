@@ -119,6 +119,13 @@ def preview(font):
     return render_template('preview.html', font=font)
 
 
+@app.route('/preview-system')
+def preview_system():
+    """Show preview of system icons"""
+
+    return render_template('preview-system.html')
+
+
 @app.route('/')
 @app.route('/index')
 def index():
