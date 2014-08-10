@@ -27,7 +27,7 @@
 
 <div class="sixteen columns" id="icons">
 	{% for char in font['characters']|sort %}
-		<div class="four columns">
+		<div class="five columns">
 		<span class="preview {{ font.cssclass(char) }}"></span>
 		 <a href="{{ url_for('get_icon', font=font['id'], colour='444', character=char) }}" class="previewLink" data-font="{{ font['id'] }}">{{ char }}</a>
 		</div>
