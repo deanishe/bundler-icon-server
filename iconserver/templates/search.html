@@ -1,0 +1,65 @@
+{% if query %}
+	{% set page_title='"{}"'.format(query) %}
+{% else %}
+	{% set page_title='Search' %}
+{% endif %}
+
+{% extends 'base.html' %}
+
+{% import '_widgets.html' as widgets %}
+
+{% block stylesheets %}
+{% for id_ in matched_fonts|sort %}
+	<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/' + fonts.FONTS[id_]['css']) }}" />
+{% endfor %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/spectrum.css') }}" />
+{% endblock %}
+
+{% block content %}
+<div class="sixteen columns">
+	<h1>Icon search</h1>
+	<div class="sixteen columns">
+			{{ widgets.search_box(query) }}
+	</div>
+	<div class="sixteen columns">
+			{{ widgets.colour_picker() }}
+	</div>
+	{% if query and results %}
+	<p>{{ results|length }} results</p>
+	{% endif %}
+</div>
+
+<hr>
+
+<div class="sixteen columns light" id="icons">
+	{% if query %}
+		{% if results %}
+			{% for char, font in results %}
+
+			<div class="one-third column result">
+				<span class="preview {{ font.cssclass(char) }}"></span>
+				<div class="title">
+					<strong>
+						<a href="{{ url_for('get_icon', font=font['id'], colour='444', character=char) }}" class="previewLink" data-font="{{ font['id'] }}">{{ char }}</a>
+					</strong>
+					<br/>
+					<a href="{{ url_for('preview', font=font['id']) }}">{{ font['name'] }}</a>
+				</div>
+			</div>
+
+			{% endfor %}
+		{% else %}
+			<p>No results for "{{ query }}". Try a different query.</p>
+		{% endif %}
+	{% else %}
+		<p>Enter a query above to search.</p>
+	{% endif %}
+</div>
+
+<div class="sixteen columns">
+	<p>
+		<strong><a href="{{ url_for('index') }}">&laquo; Back</a></strong>
+	</p>
+</div>
+
+{% endblock %}

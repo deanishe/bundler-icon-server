@@ -32,6 +32,9 @@ else:
 
 FONTS = {}
 
+# All available characters
+CHARACTERS = []
+
 
 class Font(dict):
 
@@ -57,3 +60,5 @@ for filename in os.listdir(config.CONFDIR):
     path = os.path.join(config.CONFDIR, filename)
     font = Font.from_json(path)
     FONTS[font['id']] = font
+    for char in font['characters']:
+        CHARACTERS.append((char, font['id']))

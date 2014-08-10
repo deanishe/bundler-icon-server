@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% import '_widgets.html' as widgets %}
+
 {% block content %}
 <div class="three columns sidebar">
 	<nav>
@@ -8,13 +10,16 @@
 			<li><a href="#usage">Usage</a>
 				<ul>
 					<li><a href="#bash">Bash bundler</a></li>
-					<li><a href="#misc">Miscellaneous bundler</a></li>
 					<li><a href="#php">PHP bundler</a></li>
 					<li><a href="#python">Python bundler</a></li>
 				</ul>
 			</li>
-			<li><a href="#fonts">Icons/fonts</a></li>
-			<li><a href="#examples">Examples</a></li>
+			<li><a href="#fonts">Icons/fonts</a>
+				<ul>
+					<li><a href="#search">Search</a></li>
+					<li><a href="#examples">Examples</a></li>
+				</ul>
+			</li>
 			<li><a href="#info">More information</a></li>
 		</ul>
 	</nav>
@@ -70,7 +75,7 @@
 	<a name="bash"></a>
 	<h3>Bash bundler</h3>
 	<p>
-		If you're using the <code>alfred.bundler.sh</code> bundler wrapper, you call <code>AlfredBundler::icon</code> with font name, icon name and CSS colour, e.g.:
+		If you're using the <code>alfred.bundler.sh</code> bundlet as a library, you call <code>AlfredBundler::icon</code> with font name, icon name and CSS colour, e.g.:
 	</p>
 	<p>
 	<pre>source alfred.bundler.sh
@@ -81,17 +86,14 @@ icon_left=$(AlfredBundler::icon fontawesome arrow-circle-left e5e5e5 1)</pre>
 
 	<p><code>icon_center</code> and <code>icon_left</code> contain the paths to the respective PNG icon files.</p>
 
-
-
-	<a name="misc"></a>
-	<h3>Miscellaneous bundler</h3>
+	<h4>As a utility</h4>
 	<p>
-		If you're using the <code>alfred.bundler.misc.sh</code> bundler wrapper, you call it with 'icon' font name, icon name, CSS colour and <code>0</code>/<code>1</code>, e.g.:
+		Alternatively, you can use the <code>alfred.bundler.sh</code> bundlet as an executable, calling it with 'icon' font name, icon name, CSS colour and <code>0</code>/<code>1</code>, e.g.:
 	</p>
 	<p>
-	<pre>alfred.bundler.misc.sh icon fontawesome align-center 000000 0
-alfred.bundler.misc.sh icon fontawesome arrow-circle-left e5e5e5 1
-alfred.bundler.misc.sh icon fontawesome arrow-circle-right</pre>
+	<pre>alfred.bundler.sh icon fontawesome align-center 000000 0
+alfred.bundler.sh icon fontawesome arrow-circle-left e5e5e5 1
+alfred.bundler.sh icon fontawesome arrow-circle-right</pre>
 	</p>
 
 	<p>('icon' is the type of asset you're requesting.)</p>
@@ -103,13 +105,13 @@ alfred.bundler.misc.sh icon fontawesome arrow-circle-right</pre>
 	<a name="php"></a>
 	<h3>PHP bundler</h3>
 	<p>
-		If you're using the <code>alfred.bundler.php</code> bundler wrapper, call the <code>icon</code>
+		If you're using the <code>alfred.bundler.php</code> bundlet, call the <code>icon</code>
 		method with font name, icon name, CSS colour and alter flag, e.g.:
 	</p>
 	<p>
 		<pre>$bundler = new AlfredBundler;
 
-  $center = $bundler->icon( 'fontawesome', 'align-center');
+  $center = $bundler->icon( 'fontawesome', 'align-center' );
   $left = $bundler->icon( 'fontawesome', 'align-left', 'acc321', TRUE );
 		</pre>
 	</p>
@@ -165,10 +167,14 @@ icon_left = bundler.icon('fontawesome', 'arrow-circle-left', 'e5e5e5', True)</pr
 		</table>
 	</p>
 
+	<a name="search"></a>
+	<h3>Search icons</h3>
+	<p>You can search all the available icons here:</p>
+	{{ widgets.search_box('') }}
 
 
 	<a name="examples"></a>
-	<h2>Examples</h2>
+	<h3>Examples</h3>
 
 	<p>
 		<strong>Note:</strong> Be aware when mixing icons from different fonts that they can have significantly different sizes.

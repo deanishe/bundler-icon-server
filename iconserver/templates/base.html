@@ -5,7 +5,11 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8" />
-	<title>Workflow Icon Generator</title>
+	{% if page_title %}
+		<title>{{ page_title }} // Workflow Icon Generator</title>
+	{% else %}
+		<title>Workflow Icon Generator</title>
+	{% endif %}
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -20,6 +24,10 @@
 	<!-- End custom styles -->
 
 	<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/iconserver.css') }}" />
+
+	<script type="text/javascript" src="{{ url_for('.static', filename='js/jquery-1.11.1.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('.static', filename='js/jquery.cookie.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('.static', filename='js/spectrum.js') }}"></script>
 
 		<!-- Custom JavaScript -->
 	{% block scripts %}{% endblock %}

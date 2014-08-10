@@ -1,13 +1,12 @@
+{% set page_title=font['name'] %}
+
 {% extends 'base.html' %}
+
+{% import '_widgets.html' as widgets %}
 
 {% block stylesheets %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/' + font['css']) }}" />
 <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/spectrum.css') }}" />
-{% endblock %}
-
-{% block scripts %}
-<script type="text/javascript" src="{{ url_for('.static', filename='js/jquery-1.11.1.min.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('.static', filename='js/spectrum.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -16,61 +15,25 @@
 	<p>{{ font['name'] }} was created by <a href="{{ font['url'] }}" target="_blank">{{ font['credit'] }}</a>.
 	View the <a href="{{ font['licence'] }}" target="_blank">licence</a>.
 	</p>
-	<p>
-		<label for="colourpicker">Preview colour:</label>
-		<input type="color" name="colourpicker" id="colourpicker">
-		<button id="resetColour">Reset colour</button>
-		<!-- <a href="" id="resetColour">Reset colour</a> -->
-	</p>
 </div>
-
-{% for char in font['characters']|sort %}
-	<div class="one-third column">
-	<span class="preview {{ font.cssclass(char) }}"></span>
-	 <a href="{{ url_for('get_icon', font=font['id'], colour='444', character=char) }}" class="previewLink">{{ char }}</a>
-	</div>
-{% endfor %}
-
 <div class="sixteen columns">
-	<p>
-		<strong><a href="{{ url_for('index') }}">&laquo; Back</a></strong>
-	</p>
+	{{ widgets.index_link() }}
+<div>
+<div class="sixteen columns">
+	{{ widgets.colour_picker() }}
 </div>
 
-<script>
-  // Template URL for preview
-	var previewURL = "{{ url_for('get_icon', font=font['id'], colour='COLOUR', character='CHARACTER') }}";
+<hr/>
 
-	$("#resetColour").prop("disabled", true);
-	$("#colourpicker").spectrum({
-		color: "#444",
-		showInput: true,
-		chooseText: "Apply",
-		change: function(colour){
-			var cssColour = colour.toHexString();
-			$("span.preview").css("color", cssColour);
-			if ( $("#resetColour").prop("disabled") ) {
-				$("#resetColour").prop("disabled", false);
-			}
-			// Change preview links
-			$("a.previewLink").each(function(index) {
-				var url = previewURL.replace('COLOUR', cssColour.replace('#', ''))
-														.replace('CHARACTER', $(this).text());
-				$(this).attr('href', url);
-			});
-		}
-	});
-	// Reset picker, preview colours and preview links
-	$("#resetColour").click(function() {
-		$("#colourpicker").spectrum("set", "#444");
-		$("span.preview").css("color", "#444");
-		$("#resetColour").prop("disabled", true);
-		$("a.previewLink").each(function(index) {
-				var url = previewURL.replace('COLOUR', '444')
-														.replace('CHARACTER', $(this).text());
-				$(this).attr('href', url);
-			});
-	});
+<div class="sixteen columns" id="icons">
+	{% for char in font['characters']|sort %}
+		<div class="four columns">
+		<span class="preview {{ font.cssclass(char) }}"></span>
+		 <a href="{{ url_for('get_icon', font=font['id'], colour='444', character=char) }}" class="previewLink" data-font="{{ font['id'] }}">{{ char }}</a>
+		</div>
+	{% endfor %}
+</div>
 
-</script>
+{{ widgets.index_link() }}
+
 {% endblock %}

@@ -12,7 +12,6 @@ span.preview {
 
 pre, code {
 	font-family: "Source Code Pro", "Monaco", "Courier New", monospace;
-	background-color: #eee;
 }
 
 pre {
@@ -42,6 +41,86 @@ footer {
 
 div.errorMsg {
 	text-align: center;
+}
+
+div.result span.preview {
+	float: left;
+}
+
+div.result div.title {
+	float: left;
+}
+
+input[type=search] {
+	font-size: 150%;
+}
+
+/* Light theme (default)
+================================================================*/
+
+body {
+	color: #073642;
+	background-color: #fff;
+}
+
+pre, code {
+	background-color: #f1f1f1;
+	color: #002b36;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+	color: #002b36;
+}
+.subheader {
+	color: #657b83;
+}
+
+a, a:visited {
+	color: #268bd2;
+	text-decoration: underline;
+	outline: 0;
+}
+a:hover, a:focus {
+	background-color: #eee8d5;
+	color: #268bd2;
+}
+
+
+/* Dark theme
+================================================================*/
+
+body.dark {
+	color: #eee8d5;
+	background-color: #002b36;
+}
+
+body.dark pre, body.dark code {
+	background-color: #073642;
+}
+
+
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark h5,
+body.dark h6 {
+	color: #fdf6e3;
+}
+body.dark .subheader {
+	color: #93a1a1;
+}
+
+body.dark a,
+body.dark a:visited {
+	color: #b58900;
+	text-decoration: underline;
+	outline: 0;
+}
+body.dark a:hover, body.dark a:focus {
+	background-color: #073642;
+	color: #cb4b16;
 }
 
 /* Tables

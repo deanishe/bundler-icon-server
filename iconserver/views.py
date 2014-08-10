@@ -17,7 +17,7 @@ from __future__ import unicode_literals
 import re
 
 from iconserver import app
-from flask import render_template, redirect, Response, abort
+from flask import render_template, redirect, Response, abort, request
 
 import config
 from icon import Icon
@@ -119,7 +119,7 @@ def preview(font):
     return render_template('preview.html', font=font)
 
 
-@app.route('/preview-system')
+@app.route('/preview/system')
 def preview_system():
     """Show preview of system icons"""
 
@@ -131,6 +131,30 @@ def preview_system():
 def index():
     """Homepage"""
     return render_template('index.html', fonts=fonts.FONTS)
+
+
+@app.route('/search')
+@app.route('/search/')
+def search():
+    """Search installed icons"""
+    query = request.args.get('query', '')
+    results = []
+    matched_fonts = set()
+    if query:
+        for char, id_ in fonts.CHARACTERS:
+            if char.lower().startswith(query.lower()):
+                results.append((0, char, id_))
+                matched_fonts.add(id_)
+            elif query.lower() in char.lower():
+                results.append((1, char, id_))
+                matched_fonts.add(id_)
+        results.sort()
+
+    if results:
+        results = [(char, fonts.FONTS[id_]) for (_, char, id_) in results]
+
+    return render_template('search.html', query=query, results=results,
+                           fonts=fonts, matched_fonts=matched_fonts)
 
 
 # Debugging views

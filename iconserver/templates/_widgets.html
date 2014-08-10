@@ -1,0 +1,166 @@
+
+{% macro index_link() %}
+<!-- start index_link -->
+<div class="sixteen columns">
+	<p>
+		<strong><a href="{{ url_for('index') }}">&laquo; Back to Home</a></strong>
+	</p>
+</div>
+<!-- end index_link -->
+{% endmacro %}
+
+{% macro search_box(query) %}
+	<!-- start search_box -->
+	<form action="{{ url_for('search') }}" name="search" id="search">
+		<input type="search" name="query" id="query" value="{{ query }}" placeholder="Icon name">
+		<input type="submit" value="Search">
+	</form>
+
+	<script type="text/javascript">
+		$( document ).ready(function() {
+			$("#query").focus().select();
+		})
+	</script>
+	<!-- end search_box -->
+{% endmacro %}
+
+{% macro colour_picker() %}
+	<!-- start colour_picker -->
+	<div class="sixteen columns">
+		<div class="four columns">
+			<label for="colourpicker">Preview colour:</label>
+				<input type="color" name="colourpicker" id="colourpicker">
+				<button id="resetColour">Reset colour</button>
+		</div>
+		<div class="four columns">
+			<label for="toggleBackground">
+				<input type="checkbox" name="toggleBackground" id="toggleBackground" checked>
+				Light background
+			</label>
+		</div>
+	</div>
+		<!-- <a href="" id="resetColour">Reset colour</a> -->
+
+	<script>
+  // Template URL for preview
+	var previewURL = "{{ url_for('get_icon', font='FONT', colour='COLOUR', character='CHARACTER') }}";
+
+	// Set background colour to dark/light
+	function setBackground(style) {
+		if ( style == 'light' ) {
+			$( 'body' ).removeClass( 'dark' );
+			$.cookie('backgroundStyle', 'light', { 'path': '/' });
+			$( '#toggleBackground' ).prop( 'checked', true );
+		} else {
+			$( 'body' ).addClass( 'dark' );
+			$.cookie('backgroundStyle', 'dark', { 'path': '/' });
+			$( '#toggleBackground' ).prop( 'checked', false );
+		}
+		console.log('set backgroundStyle = ' + style );
+	}
+
+	// Set a new preview colour
+	function changePreviewColour(cssColour) {
+
+			$.cookie('previewColour', cssColour, { 'path': '/' });
+			console.log( 'previewColour > ' + cssColour );
+
+			$("span.preview").css("color", cssColour);
+
+			if ( $("#resetColour").prop("disabled") ) {
+				$("#resetColour").prop("disabled", false);
+			}
+
+			// Change preview links
+			$("a.previewLink").each(function(index) {
+				var url = previewURL.replace('COLOUR', cssColour.replace('#', ''))
+														.replace('CHARACTER', $(this).text())
+														.replace('FONT', $(this).data('font'));
+				$(this).attr('href', url);
+			});
+
+	};
+
+	// Reset picker, preview colours and preview links
+	$("#resetColour").click(function() {
+		$.removeCookie('previewColour');
+		$("#colourpicker").spectrum("set", "#444");
+		$("span.preview").css("color", "#444");
+		$("#resetColour").prop("disabled", true);
+		$("a.previewLink").each(function(index) {
+				var url = previewURL.replace('COLOUR', '444')
+														.replace('CHARACTER', $(this).text())
+														.replace('FONT', $(this).data('font'));
+				$(this).attr('href', url);
+			});
+		$( '#toggleBackground' ).toggle();
+	});
+
+	/****************************************************************************
+	 OnLoad functions
+	****************************************************************************/
+
+	$( document ).ready( function(){
+
+		console.log( 'initialising ...' );
+
+		var cookies = $.cookie();
+		for (var i in cookies ) {
+			console.log( i + ' = ' + cookies[i] );
+		}
+
+		var backgroundStyle = $.cookie( 'backgroundStyle' );
+		var previewColour = $.cookie('previewColour' );
+
+		if ( ! previewColour ) {
+			var previewColour = '#444';
+		}
+
+		console.log( 'previewColour < ' + previewColour );
+		console.log('backgroundStyle < ' + backgroundStyle );
+
+		if ( backgroundStyle == 'dark' ) {
+			$( "#toggleBackground" ).prop( 'checked', false );
+			$( 'body' ).addClass( 'dark' );
+			console.log( 'theme set to dark' );
+		}
+
+
+		/**************************************************************************
+			Add callbacks
+		**************************************************************************/
+
+		$( "#toggleBackground" ).change(function() {
+			$( "body" ).toggleClass( "dark" );
+			if ( this.checked ) {  // light background
+				setBackground( 'light' );
+			} else {
+				setBackground( 'dark' );
+			}
+		});
+
+		$("#resetColour").prop("disabled", true);
+
+		$("#colourpicker").spectrum({
+			color: previewColour,
+			showInput: true,
+			chooseText: "Apply",
+			clickoutFiresChange: true,
+			change: function(colour){
+				cssColour = colour.toHexString();
+				console.log( 'new preview colour : ' + cssColour );
+				changePreviewColour( cssColour );
+			}
+		});
+
+		/**************************************************************************
+			Load saved settings
+		**************************************************************************/
+
+		changePreviewColour( previewColour );
+
+	});
+
+</script>
+<!-- end colour_picker -->
+{% endmacro %}
