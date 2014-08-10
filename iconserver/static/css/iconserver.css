@@ -79,8 +79,14 @@ img.allPreview {
 	border: 1px solid blue;
 }
 
+/* System icons preview */
+
 table#system-preview tbody tr td {
 	text-align: center;
+}
+
+table#system-preview tbody tr td:first-child {
+	text-align: left;
 }
 
 /* Mobile
