@@ -79,6 +79,10 @@ img.allPreview {
 	border: 1px solid blue;
 }
 
+table#system-preview tbody tr td {
+	text-align: center;
+}
+
 /* Mobile
 ================================================================*/
 
