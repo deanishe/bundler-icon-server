@@ -49,5 +49,15 @@ ADMINS = []
 
 USE_LOCAL_MAIL = True
 
+# HTML Page footer shown at the bottom of each page
+# You can include HTML, as this won't be escaped by Jinja
+
+HTML_FOOTER = """
+by <a href="http://www.deanishe.net/">Dean Jackson</a>
+&nbsp;&nbsp;|&nbsp;
+hosted on <a
+href="https://www.linode.com/?r=4a30af04867ab319eef6c19a4de9b06620c11dc4"
+target="_new">Linode</a>
+"""
 
 from siteconfig import *

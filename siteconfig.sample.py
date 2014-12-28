@@ -8,7 +8,7 @@ ADMINS = ['admin@example.com']
 DEBUG = False
 
 # Mail server settings
-#-----------------------------------------------------------------
+# -----------------------------------------------------------------
 
 # Set to `True` to use send emails via the local mail server
 USE_LOCAL_MAIL = False
@@ -33,3 +33,8 @@ MAX_CACHE_SIZE = 0  # Will cause an error! You must configure this!
 # If `False`, `SIZE` configured in `config.py` or in this module
 # will be used regardless of what the user specifies
 API_ALLOW_SIZE = True
+
+# Page footer contents (e.g. link to webhost)
+# May contain HTML, as it won't be escaped by Jinja
+
+# HTML_FOOTER = ''
