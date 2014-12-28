@@ -158,7 +158,7 @@ def search():
 
 
 # Debugging views
-#-----------------------------------------------------------------------
+# ----------------------------------------------------------------------
 
 @app.route('/all')
 @app.route('/all/<colour>')
@@ -171,15 +171,23 @@ def viewall(colour='444'):
 
     if not config.DEBUG:
         abort(404)
+    # Build table of fonts
+    # [
+    #   ((font1, charname), (font2, charname), (font3, charname)),
+    #   ((font1, charname), (font2, charname), (font3, charname)),
+    # ]
     font_list = []
     names = sorted(fonts.FONTS.keys())
+
     for name in names:
         l = []
         font = fonts.FONTS[name]
         for c in sorted(font['characters']):
             l.append((name, c))
         font_list.append(l)
+
     rows = map(None, *font_list)
+
     return render_template('viewall.html', rows=rows, colour=colour)
 
 

@@ -3,10 +3,12 @@
 {% block content %}
 <table>
 <tr>
-	<th>{{ rows[0][0][0] }}</th>
-	<th>{{ rows[0][1][0] }}</th>
-	<th>{{ rows[0][2][0] }}</th>
-	<th>{{ rows[0][3][0] }}</th>
+	<!--
+		Names of fonts in headers
+	-->
+	{% for i in range(rows[0]|length) %}
+	<th>{{ rows[0][i][0] }}</th>
+	{% endfor %}
 </tr>
 {% for row in rows %}
 	<tr>
