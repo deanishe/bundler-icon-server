@@ -4,20 +4,27 @@
 
 {% block content %}
 <div class="three columns sidebar">
+	<!--
+	88d8b.d8b. .d8888b. 88d888b. dP    dP
+	88'`88'`88 88ooood8 88'  `88 88    88
+	88  88  88 88.  ... 88    88 88.  .88
+	dP  dP  dP `88888P' dP    dP `88888P'
+	-->
 	<nav>
-		<h4><a href="#top">Contents</a></h4>
+		{# <h4><a href="#top">Contents</a></h4> #}
+		<h5>Contents</h5>
 		<ul>
-			<li><a href="#usage">Usage</a>
-				<ul>
-					<li><a href="#bash">Bash bundler</a></li>
-					<li><a href="#php">PHP bundler</a></li>
-					<li><a href="#python">Python bundler</a></li>
-				</ul>
-			</li>
 			<li><a href="#fonts">Icons/fonts</a>
 				<ul>
 					<li><a href="#search">Search</a></li>
 					<li><a href="#examples">Examples</a></li>
+				</ul>
+			</li>
+			<li><a href="#usage">Bundler Usage</a>
+				<ul>
+					<li><a href="#bash">Bash bundler</a></li>
+					<li><a href="#php">PHP bundler</a></li>
+					<li><a href="#python">Python bundler</a></li>
 				</ul>
 			</li>
 			<li><a href="#info">More information</a></li>
@@ -26,17 +33,115 @@
 	&nbsp;
 </div>
 <div class="twelve columns offset-by-one">
-	<a href="top"></a>
-	<h1>Workflow Icon Generator</h1>
+	<h1 id="top">Icon Generator</h1>
 	<p>
 		Generate icons for your <a href="http://www.alfredapp.com/" target="_new">Alfred 2</a> workflows.
-		This webservice is a backend service for the <a href="https://github.com/shawnrice/alfred-bundler" target="_new">Alfred bundler</a>.
+		This webservice is designed to be a backend service for the <a href="https://github.com/shawnrice/alfred-bundler" target="_new">Alfred bundler</a>.
+	</p>
+	<p>
+		You can also use it manually to generate and download icons for other purposes.
 	</p>
 
+	<!--
+	.8888b                     dP
+	88   "                     88
+	88aaa  .d8888b. 88d888b. d8888P .d8888b.
+	88     88'  `88 88'  `88   88   Y8ooooo.
+	88     88.  .88 88    88   88         88
+	dP     `88888P' dP    dP   dP   `88888P'
+	-->
+	<h2 id="fonts">Icons/fonts</h2>
 
+	<p>These fonts are currently supported by the service. Click the "preview" links to see the each font's icons and their names.</p>
 
-	<a name="usage"></a>
-	<h2>Usage</h2>
+	<p>
+		<table>
+			<thead>
+				<th>Font homepage</th>
+				<th>Bundler name</th>
+				<th>Preview</th>
+			</thead>
+			<tbody>
+				{% for id_ in fonts|sort %}
+					{% with font = fonts[id_] %}
+						<tr>
+							<td><a href="{{ font['url'] }}" target="_new">{{ font['name'] }}</a></td>
+							<td><code>{{ id_ }}</code></td>
+							<td><a href="{{ url_for('preview', font=id_) }}">View icons</a></td>
+						</tr>
+					{% endwith %}
+				{% endfor %}
+				<tr>
+					<td>OS X system icons</td>
+					<td><code>system</code></td>
+					<td><a href="{{ url_for('preview_system') }}">View icons</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</p>
+
+	<a name="search"></a>
+	<p>You can search all the available icons here:</p>
+	{{ widgets.search_box('') }}
+
+	<!--
+	                                             dP
+	                                             88
+	.d8888b. .d8888b. .d8888b. 88d888b. .d8888b. 88d888b.
+	Y8ooooo. 88ooood8 88'  `88 88'  `88 88'  `"" 88'  `88
+	      88 88.  ... 88.  .88 88       88.  ... 88    88
+	`88888P' `88888P' `88888P8 dP       `88888P' dP    dP
+	-->
+
+	<!--
+	                                               dP
+	                                               88
+	.d8888b. dP.  .dP .d8888b. 88d8b.d8b. 88d888b. 88 .d8888b. .d8888b.
+	88ooood8  `8bd8'  88'  `88 88'`88'`88 88'  `88 88 88ooood8 Y8ooooo.
+	88.  ...  .d88b.  88.  .88 88  88  88 88.  .88 88 88.  ...       88
+	`88888P' dP'  `dP `88888P8 dP  dP  dP 88Y888P' dP `88888P' `88888P'
+	                                      88
+	                                      dP
+	-->
+
+	<h3 id="examples">Examples</h3>
+
+	<p>
+		<strong>Note:</strong> Be aware when mixing icons from different fonts that they can have significantly different sizes.
+		In particular, some, but not all, Typicons are significantly smaller than icons from the other fonts:
+	</p>
+
+	<p>
+		<table>
+			<tr>
+				<th>Elusive Icons</th>
+				<th>Font Awesome</th>
+				<!-- <th>IcoMoon</th> -->
+				<th>Typicons</th>
+			</tr>
+			<tr>
+				<td><img src="{{ url_for('get_icon', font='elusive', colour='444', character='adjust') }}" alt="adjust" title="adjust" width="128"></td>
+				<td><img src="{{ url_for('get_icon', font='fontawesome', colour='444', character='adjust') }}" alt="adjust" title="adjust" width="128"></td>
+				<!-- <td><img src="{{ url_for('get_icon', font='icomoon', colour='444', character='contrast') }}" alt="contrast" title="contrast"></td> -->
+				<td><img src="{{ url_for('get_icon', font='typicons', colour='444', character='adjust-contrast') }}" alt="adjust-contrast" title="adjust-contrast" width="128"></td>
+			</tr>
+			<tr>
+				<td><img src="{{ url_for('get_icon', font='elusive', colour='444', character='inbox') }}" alt="inbox" title="inbox" width="128"></td>
+				<td><img src="{{ url_for('get_icon', font='fontawesome', colour='444', character='download') }}" alt="download" title="download" width="128"></td>
+				<!-- <td><img src="{{ url_for('get_icon', font='icomoon', colour='444', character='download') }}" alt="download" title="download"></td> -->
+				<td><img src="{{ url_for('get_icon', font='typicons', colour='444', character='download-outline') }}" alt="download-outline" title="download-outline" width="128"></td>
+			</tr>
+		</table>
+	</p>
+	<!--
+	dP    dP .d8888b. .d8888b. .d8888b. .d8888b.
+	88    88 Y8ooooo. 88'  `88 88'  `88 88ooood8
+	88.  .88       88 88.  .88 88.  .88 88.  ...
+	`88888P' `88888P' `88888P8 `8888P88 `88888P'
+	                                .88
+	                            d8888P
+	-->
+	<h2 id="usage">Bundler Usage</h2>
 
 	<p>All implementations return the full local path to the requested icon (downloading it first if necessary) and take (mostly) the same arguments:</p>
 
@@ -70,10 +175,16 @@
 		</table>
 	</p>
 
+	<!--
+	dP                         dP
+	88                         88
+	88d888b. .d8888b. .d8888b. 88d888b.
+	88'  `88 88'  `88 Y8ooooo. 88'  `88
+	88.  .88 88.  .88       88 88    88
+	88Y8888' `88888P8 `88888P' dP    dP
+	-->
 
-
-	<a name="bash"></a>
-	<h3>Bash bundler</h3>
+	<h3 id="bash">Bash bundler</h3>
 	<p>
 		If you're using the <code>alfred.bundler.sh</code> bundlet as a library, you call <code>AlfredBundler::icon</code> with font name, icon name and CSS colour, e.g.:
 	</p>
@@ -100,10 +211,18 @@ alfred.bundler.sh icon fontawesome arrow-circle-right</pre>
 
 	<p>It will echo the path of the requested icon to stdout.</p>
 
+	<!--
+	         dP
+	         88
+	88d888b. 88d888b. 88d888b.
+	88'  `88 88'  `88 88'  `88
+	88.  .88 88    88 88.  .88
+	88Y888P' dP    dP 88Y888P'
+	88                88
+	dP                dP
+	-->
 
-
-	<a name="php"></a>
-	<h3>PHP bundler</h3>
+	<h3 id="php">PHP bundler</h3>
 	<p>
 		If you're using the <code>alfred.bundler.php</code> bundlet, call the <code>icon</code>
 		method with font name, icon name, CSS colour and alter flag, e.g.:
@@ -116,10 +235,18 @@ alfred.bundler.sh icon fontawesome arrow-circle-right</pre>
 		</pre>
 	</p>
 
+	<!--
+	                    dP   dP
+	                    88   88
+	88d888b. dP    dP d8888P 88d888b. .d8888b. 88d888b.
+	88'  `88 88    88   88   88'  `88 88'  `88 88'  `88
+	88.  .88 88.  .88   88   88    88 88.  .88 88    88
+	88Y888P' `8888P88   dP   dP    dP `88888P' dP    dP
+	88            .88
+	dP        d8888P
+	-->
 
-
-	<a name="python"></a>
-	<h3>Python bundler</h3>
+	<h3 id="python">Python bundler</h3>
 	<p>
 		If you're using <code>bundler.py</code>, call the <code>icon()</code> function with the font name, icon name, CSS colour and alter flag, e.g.:
 	</p>
@@ -134,80 +261,16 @@ icon_left = bundler.icon('fontawesome', 'arrow-circle-left', 'e5e5e5', True)</pr
 
 	<p>Please consult the source code for extensive documentation.</p>
 
+	<!--
+	oo          .8888b
+	            88   "
+	dP 88d888b. 88aaa  .d8888b.
+	88 88'  `88 88     88'  `88
+	88 88    88 88     88.  .88
+	dP dP    dP dP     `88888P'
+	-->
 
-
-
-	<a name="fonts"></a>
-	<h2>Icons/fonts</h2>
-	<p>These fonts are currently supported by the service. Click the "preview" links to see the each font's icons and their names.</p>
-
-	<p>
-		<table>
-			<thead>
-				<th>Font</th>
-				<th>Bundler name</th>
-				<th>Preview</th>
-			</thead>
-			<tbody>
-				{% for id_ in fonts|sort %}
-					{% with font = fonts[id_] %}
-						<tr>
-							<td><a href="{{ font['url'] }}" target="_new">{{ font['name'] }}</a></td>
-							<td><code>{{ id_ }}</code></td>
-							<td><a href="{{ url_for('preview', font=id_) }}">View icons</a></td>
-						</tr>
-					{% endwith %}
-				{% endfor %}
-				<tr>
-					<td>OS X system icons</td>
-					<td><code>system</code></td>
-					<td><a href="{{ url_for('preview_system') }}">View icons</a></td>
-				</tr>
-			</tbody>
-		</table>
-	</p>
-
-	<a name="search"></a>
-	<h3>Search icons</h3>
-	<p>You can search all the available icons here:</p>
-	{{ widgets.search_box('') }}
-
-
-	<a name="examples"></a>
-	<h3>Examples</h3>
-
-	<p>
-		<strong>Note:</strong> Be aware when mixing icons from different fonts that they can have significantly different sizes.
-		In particular, some, but not all, Typicons are significantly smaller than icons from the other fonts:
-	</p>
-
-	<p>
-		<table>
-			<tr>
-				<th>Elusive Icons</th>
-				<th>Font Awesome</th>
-				<!-- <th>IcoMoon</th> -->
-				<th>Typicons</th>
-			</tr>
-			<tr>
-				<td><img src="{{ url_for('get_icon', font='elusive', colour='444', character='adjust') }}" alt="adjust" title="adjust" width="128"></td>
-				<td><img src="{{ url_for('get_icon', font='fontawesome', colour='444', character='adjust') }}" alt="adjust" title="adjust" width="128"></td>
-				<!-- <td><img src="{{ url_for('get_icon', font='icomoon', colour='444', character='contrast') }}" alt="contrast" title="contrast"></td> -->
-				<td><img src="{{ url_for('get_icon', font='typicons', colour='444', character='adjust-contrast') }}" alt="adjust-contrast" title="adjust-contrast" width="128"></td>
-			</tr>
-			<tr>
-				<td><img src="{{ url_for('get_icon', font='elusive', colour='444', character='inbox') }}" alt="inbox" title="inbox" width="128"></td>
-				<td><img src="{{ url_for('get_icon', font='fontawesome', colour='444', character='download') }}" alt="download" title="download" width="128"></td>
-				<!-- <td><img src="{{ url_for('get_icon', font='icomoon', colour='444', character='download') }}" alt="download" title="download"></td> -->
-				<td><img src="{{ url_for('get_icon', font='typicons', colour='444', character='download-outline') }}" alt="download-outline" title="download-outline" width="128"></td>
-			</tr>
-		</table>
-	</p>
-
-
-
-	<a name="info"></a>
-	<h2>More information</h2>
+	<h2 id="info">More information</h2>
 
 	<p>
 		This icon server is developed and operated by <a href="http://www.deanishe.net/">Dean Jackson</a> for the <a href="http://shawnrice.github.io/alfred-bundler/">Alfred Bundler</a> by <a href="http://shawnrice.github.io/">Shawn Patrick Rice</a>.
