@@ -72,24 +72,24 @@
 	<p>
 		<table>
 			<thead>
-				<th>Font homepage</th>
 				<th>Bundler name</th>
 				<th>Preview</th>
+				<th>Font homepage</th>
 			</thead>
 			<tbody>
 				{% for id_ in fonts|sort %}
 					{% with font = fonts[id_] %}
 						<tr>
-							<td><a href="{{ font['url'] }}" target="_new">{{ font['name'] }}</a></td>
 							<td><code>{{ id_ }}</code></td>
 							<td><a href="{{ url_for('preview', font=id_) }}">View icons</a></td>
+							<td><a href="{{ font['url'] }}" target="_new">{{ font['name'] }}</a></td>
 						</tr>
 					{% endwith %}
 				{% endfor %}
 				<tr>
-					<td>OS X system icons</td>
 					<td><code>system</code></td>
 					<td><a href="{{ url_for('preview_system') }}">View icons</a></td>
+					<td>OS X system icons</td>
 				</tr>
 			</tbody>
 		</table>
