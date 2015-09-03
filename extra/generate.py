@@ -25,7 +25,8 @@ characters = {}
 # filename = 'entypo-social.tsv'
 # filename = 'icomoon.tsv'
 # filename = 'typicons.tsv'
-filename = 'elusive.tsv'
+# filename = 'elusive.tsv'
+filename = 'weather.tsv'
 
 
 with open(filename, 'rb') as file:
