@@ -210,8 +210,9 @@
 ================================================== */
 
 	form {
-		margin-bottom: 20px;
-		padding: 0; }
+		margin-bottom: 20px; }
+	form#search {
+		margin-bottom: 0; }
 	fieldset {
 		margin-bottom: 20px; }
 	input[type="text"],
