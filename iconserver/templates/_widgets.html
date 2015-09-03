@@ -12,6 +12,7 @@
 {% macro search_box(query) %}
 	<!-- start search_box -->
 	<form action="{{ url_for('search') }}" name="search" id="search">
+		Search icons:
 		<input type="search" name="query" id="query" value="{{ query }}" placeholder="Icon name">
 		<input type="submit" value="Search">
 	</form>

@@ -14,9 +14,9 @@
 		{# <h4><a href="#top">Contents</a></h4> #}
 		<h5>Contents</h5>
 		<ul>
-			<li><a href="#fonts">Icons/fonts</a>
+			<li><a href="#search" id="search">Search</a></li>
+			<li><a href="#fonts">Available fonts</a>
 				<ul>
-					<li><a href="#search">Search</a></li>
 					<li><a href="#examples">Examples</a></li>
 				</ul>
 			</li>
@@ -51,9 +51,9 @@
 	`88888P' `88888P' `88888P8 dP       `88888P' dP    dP
 	-->
 
-	{# <h2 id="search">Search icons</h2> #}
-	<a name="search"></a>
-	<p>You can search all the available icons here:</p>
+	<h2 id="search">Search for icons</h2>
+	{# <a name="search"></a> #}
+	{# <p>You can search all the available icons here:</p> #}
 	{{ widgets.search_box('') }}
 
 
@@ -65,7 +65,7 @@
 	88     88.  .88 88    88   88         88
 	dP     `88888P' dP    dP   dP   `88888P'
 	-->
-	<h2 id="fonts">Icons/fonts</h2>
+	<h2 id="fonts">Available fonts</h2>
 
 	<p>These fonts are currently supported by the service. Click the "preview" links to see the each font's icons and their names.</p>
 
@@ -281,6 +281,15 @@ icon_left = bundler.icon('fontawesome', 'arrow-circle-left', 'e5e5e5', True)</pr
 	<p>
 		The source code can be found on <a href="https://github.com/deanishe/bundler-icon-server">GitHub</a>.
 	</p>
+
+	<script type="text/javascript">
+		$('#search').on('click', function(e) {
+			// console.log('Search clicked');
+			window.location.href = '#search';
+			$("#query").focus().select();
+			return false;
+		});
+	</script>
 
 </div>
 {% endblock %}
