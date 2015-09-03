@@ -58,6 +58,8 @@ by <a href="http://www.deanishe.net/">Dean Jackson</a>
 hosted on <a
 href="https://www.linode.com/?r=4a30af04867ab319eef6c19a4de9b06620c11dc4"
 target="_new">Linode</a>
+&nbsp;&nbsp;|&nbsp;
+fork on <a href="https://github.com/deanishe/bundler-icon-server">GitHub</a>
 """
 
 from siteconfig import *
