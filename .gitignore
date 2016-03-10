@@ -8,3 +8,7 @@
 *icomoon*
 *open-iconic*
 *weathericons*
+
+__pycache__/
+*.py[cod]
+*$py.class
