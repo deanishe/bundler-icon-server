@@ -84,17 +84,9 @@
 
 	// Reset picker, preview colours and preview links
 	$("#resetColour").click(function() {
-		$.removeCookie('previewColour');
 		$("#colourpicker").spectrum("set", "#444");
-		$("span.preview").css("color", "#444");
-		$("#resetColour").prop("disabled", true);
-		$("a.previewLink").each(function(index) {
-				var url = previewURL.replace('COLOUR', '444')
-														.replace('CHARACTER', $(this).text())
-														.replace('FONT', $(this).data('font'));
-				$(this).attr('href', url);
-			});
-		$( '#toggleBackground' ).toggle();
+		changePreviewColour('#444');
+		setBackground('light');
 	});
 
 	/****************************************************************************

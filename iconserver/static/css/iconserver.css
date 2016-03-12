@@ -92,13 +92,17 @@ a:hover, a:focus {
 
 body.dark {
 	color: #eee8d5;
-	background-color: #002b36;
+	/*background-color: #002b36;*/
+	background-color: #222;
 }
 
 body.dark pre, body.dark code {
 	background-color: #073642;
 }
 
+body.dark hr {
+	border-color: #444;
+}
 
 body.dark h1,
 body.dark h2,
@@ -119,7 +123,7 @@ body.dark a:visited {
 	outline: 0;
 }
 body.dark a:hover, body.dark a:focus {
-	background-color: #073642;
+	background-color: #111;
 	color: #cb4b16;
 }
 

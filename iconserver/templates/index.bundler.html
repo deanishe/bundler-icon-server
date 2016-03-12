@@ -1,3 +1,8 @@
+{#
+This is the original front page. The server was originally
+intended for use with the (apparently now defunct) Alfred Bundler.
+#}
+
 {% extends 'base.html' %}
 
 {% import '_widgets.html' as widgets %}
@@ -22,7 +27,9 @@
 			</li>
 			<li><a href="#usage">Bundler Usage</a>
 				<ul>
-					<li><a href="#usage-examples">Examples</a></li>
+					<li><a href="#bash">Bash bundler</a></li>
+					<li><a href="#php">PHP bundler</a></li>
+					<li><a href="#python">Python bundler</a></li>
 				</ul>
 			</li>
 			<li><a href="#info">More information</a></li>
@@ -33,11 +40,11 @@
 <div class="twelve columns offset-by-one">
 	<h1 id="top">Icon Generator</h1>
 	<p>
-		A webservice for generating PNG icons from icon fonts (Font Awesome etc.).
+		Generate icons for your <a href="http://www.alfredapp.com/" target="_new">Alfred 2</a> workflows.
+		This webservice is designed to be a backend service for the <a href="https://github.com/shawnrice/alfred-bundler" target="_new">Alfred bundler</a>.
 	</p>
-
 	<p>
-		The original motivation for creating this software was to have a way to easily generate icons for <a href="http://www.alfredapp.com/">Alfred</a> workflows.
+		You can also use it manually to generate and download icons for other purposes.
 	</p>
 
 	<!--
@@ -49,7 +56,7 @@
 	`88888P' `88888P' `88888P8 dP       `88888P' dP    dP
 	-->
 
-	<h2 id="search">Search icons</h2>
+	<h2 id="search">Search for icons</h2>
 	{# <a name="search"></a> #}
 	{# <p>You can search all the available icons here:</p> #}
 	{{ widgets.search_box('') }}
@@ -70,25 +77,25 @@
 	<p>
 		<table>
 			<thead>
-				<th>API name</th>
-				<th>Website</th>
+				<th>Bundler name</th>
 				<th>Preview</th>
+				<th>Font homepage</th>
 			</thead>
 			<tbody>
 				{% for id_ in fonts|sort %}
 					{% with font = fonts[id_] %}
 						<tr>
 							<td><code>{{ id_ }}</code></td>
-							<td><a href="{{ font['url'] }}" target="_new">{{ font['name'] }}</a></td>
 							<td><a href="{{ url_for('preview', font=id_) }}">View icons</a></td>
+							<td><a href="{{ font['url'] }}" target="_new">{{ font['name'] }}</a></td>
 						</tr>
 					{% endwith %}
 				{% endfor %}
-				{# <tr>
+				<tr>
 					<td><code>system</code></td>
 					<td><a href="{{ url_for('preview_system') }}">View icons</a></td>
 					<td>OS X system icons</td>
-				</tr> #}
+				</tr>
 			</tbody>
 		</table>
 	</p>
@@ -133,7 +140,6 @@
 			</tr>
 		</table>
 	</p>
-
 	<!--
 	dP    dP .d8888b. .d8888b. .d8888b. .d8888b.
 	88    88 Y8ooooo. 88'  `88 88'  `88 88ooood8
@@ -142,15 +148,9 @@
 	                                .88
 	                            d8888P
 	-->
-	<h2 id="usage">Usage</h2>
+	<h2 id="usage">Bundler Usage</h2>
 
-	<p>You can create and download icons manually via the web interface or
-	download them directly with <code>curl</code> or the like.</p>
-
-	<p>The URL looks like this:
-
-	<pre>http://icons.example.com/icon/&lt;fontname&gt;/&lt;csscolour&gt;/&lt;character-name&gt;[/&lt;size&gt;][.png]</pre>
-	</p>
+	<p>All implementations return the full local path to the requested icon (downloading it first if necessary) and take (mostly) the same arguments:</p>
 
 	<p>
 		<table>
@@ -160,57 +160,113 @@
 				<th>Examples</th>
 			</tr>
 			<tr>
-				<td><code>fontname</code></td>
-				<td>The name of the font (see <a href="#fonts">above</a>).</td>
+				<td><code>font</code></td>
+				<td>The name of the font (see <a href="#fonts">below</a>).</td>
 				<td><code>fontawesome</code>, <code>elusive</code></td>
 			</tr>
 			<tr>
-				<td><code>csscolor</code></td>
-				<td>A CSS color <strong>without</strong> preceding <code>#</code>. May be 3 or 6 characters, upper- or lowercase.</td>
-				<td><code>FFF</code>, <code>e3a2d1</code>, <code>000000</code></td>
-			</tr>
-			<tr>
-				<td><code>character-name</code></td>
+				<td><code>icon</code></td>
 				<td>The name of the icon/character. Use the <a href="#fonts">preview links</a> to view available icons and their names.</td>
 				<td><code>adult</code>, <code>ban-circle</code>, <code>adjust</code>, <code>youtube</code></td>
 			</tr>
 			<tr>
-				<td><code>size</code> (optional, default is <code>{{ config.SIZE }}</code>)</td>
-				<td>The size (width = height) of the generated PNG image in pixels.</td>
-				<td><code>64</code>, <code>512</code>, <code>1400</code></td>
+				<td><code>color</code> (optional, default is <code>000000</code>)</td>
+				<td>A CSS color <strong>without</strong> preceding <code>#</code>. May be 3 or 6 characters, upper- or lowercase.</td>
+				<td><code>FFF</code>, <code>e3a2d1</code>, <code>000000</code></td>
+			</tr>
+			<tr>
+				<td><code>alter</code> (optional, default is <code>False</code>)</td>
+				<td>Flag to automatically switch the colour to dark/light depending on the theme background. Thus if you specify a dark <code>color</code> and the user's theme background is also dark, the bundler will automatically use a light icon color.</td>
+				<td><code>True</code>, <code>False</code>, <code>0</code>, <code>1</code></td>
 			</tr>
 		</table>
 	</p>
 
-	<p>The server will redirect the client to the actual URL of the image (after it has been generated, if necessary). Thus, the client <em>must</em> follow redirects.</p>
-
-	<!--                                                dP
-	                                               88
-	.d8888b. dP.  .dP .d8888b. 88d8b.d8b. 88d888b. 88 .d8888b. .d8888b.
-	88ooood8  `8bd8'  88'  `88 88'`88'`88 88'  `88 88 88ooood8 Y8ooooo.
-	88.  ...  .d88b.  88.  .88 88  88  88 88.  .88 88 88.  ...       88
-	`88888P' dP'  `dP `88888P8 dP  dP  dP 88Y888P' dP `88888P' `88888P'
-	                                      88
-	                                      dP
+	<!--
+	dP                         dP
+	88                         88
+	88d888b. .d8888b. .d8888b. 88d888b.
+	88'  `88 88'  `88 Y8ooooo. 88'  `88
+	88.  .88 88.  .88       88 88    88
+	88Y8888' `88888P8 `88888P' dP    dP
 	-->
 
-	<h3 id="usage-examples">Examples</h3>
+	<h3 id="bash">Bash bundler</h3>
+	<p>
+		If you're using the <code>alfred.bundler.sh</code> bundlet as a library, you call <code>AlfredBundler::icon</code> with font name, icon name and CSS colour, e.g.:
+	</p>
+	<p>
+	<pre>source alfred.bundler.sh
 
-	<p>Download black Apple logo to <code>apple.png</code>:
-		<pre>curl -sSL -o apple.png http://icons.example.com/icon/fontawesome/000/apple</pre>
+icon_center=$(AlfredBundler::icon fontawesome align-center)
+icon_left=$(AlfredBundler::icon fontawesome arrow-circle-left e5e5e5 1)</pre>
 	</p>
 
-	<p>Include icon in HTML:
-		<pre>&lt;img src="http://icons.example.com/icon/fontawesome/000/apple" alt="Apple Logo"&gt;</pre>
+	<p><code>icon_center</code> and <code>icon_left</code> contain the paths to the respective PNG icon files.</p>
+
+	<h4>As a utility</h4>
+	<p>
+		Alternatively, you can use the <code>alfred.bundler.sh</code> bundlet as an executable, calling it with 'icon' font name, icon name, CSS colour and <code>0</code>/<code>1</code>, e.g.:
+	</p>
+	<p>
+	<pre>alfred.bundler.sh icon fontawesome align-center 000000 0
+alfred.bundler.sh icon fontawesome arrow-circle-left e5e5e5 1
+alfred.bundler.sh icon fontawesome arrow-circle-right</pre>
 	</p>
 
-	<p><img src="./icon/fontawesome/000/apple" alt="Apple Logo"></p>
+	<p>('icon' is the type of asset you're requesting.)</p>
 
-	<p>Custom size:
-		<pre>&lt;img src="http://icons.example.com/icon/fontawesome/000/apple/32" alt="Small Apple Logo"&gt;</pre>
+	<p>It will echo the path of the requested icon to stdout.</p>
+
+	<!--
+	         dP
+	         88
+	88d888b. 88d888b. 88d888b.
+	88'  `88 88'  `88 88'  `88
+	88.  .88 88    88 88.  .88
+	88Y888P' dP    dP 88Y888P'
+	88                88
+	dP                dP
+	-->
+
+	<h3 id="php">PHP bundler</h3>
+	<p>
+		If you're using the <code>alfred.bundler.php</code> bundlet, call the <code>icon</code>
+		method with font name, icon name, CSS colour and alter flag, e.g.:
+	</p>
+	<p>
+		<pre>$bundler = new AlfredBundler;
+
+  $center = $bundler->icon( 'fontawesome', 'align-center' );
+  $left = $bundler->icon( 'fontawesome', 'align-left', 'acc321', TRUE );
+		</pre>
 	</p>
 
-	<p><img src="./icon/fontawesome/000/apple/32" alt="Small Apple Logo"></p>
+	<!--
+	                    dP   dP
+	                    88   88
+	88d888b. dP    dP d8888P 88d888b. .d8888b. 88d888b.
+	88'  `88 88    88   88   88'  `88 88'  `88 88'  `88
+	88.  .88 88.  .88   88   88    88 88.  .88 88    88
+	88Y888P' `8888P88   dP   dP    dP `88888P' dP    dP
+	88            .88
+	dP        d8888P
+	-->
+
+	<h3 id="python">Python bundler</h3>
+	<p>
+		If you're using <code>bundler.py</code>, call the <code>icon()</code> function with the font name, icon name, CSS colour and alter flag, e.g.:
+	</p>
+	<p>
+		<pre>import bundler
+
+icon_centre = bundler.icon('fontawesome', 'align-center')
+icon_left = bundler.icon('fontawesome', 'arrow-circle-left', 'e5e5e5', True)</pre>
+	</p>
+
+	<p><code>bundler.icon()</code> returns the Unicode path to the icon file.</p>
+
+	<p>Please consult the source code for extensive documentation.</p>
 
 	<!--
 	oo          .8888b
@@ -222,6 +278,10 @@
 	-->
 
 	<h2 id="info">More information</h2>
+
+	<p>
+		This icon server is developed and operated by <a href="http://www.deanishe.net/">Dean Jackson</a> for the <a href="http://shawnrice.github.io/alfred-bundler/">Alfred Bundler</a> by <a href="http://shawnrice.github.io/">Shawn Patrick Rice</a>.
+	</p>
 
 	<p>
 		The source code can be found on <a href="https://github.com/deanishe/bundler-icon-server">GitHub</a>.
