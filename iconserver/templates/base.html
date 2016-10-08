@@ -16,6 +16,12 @@
 	<!-- Skeleton -->
 	<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/base.css') }}" />
 	<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/skeleton.css') }}" />
+	{% if 'theme' in request.cookies %}
+		{% set filename = 'css/' + request.cookies.theme + '.css' %}
+	{% else %}
+		{% set filename = 'css/light.css' %}
+	{% endif %}
+	<link id="theme" rel="stylesheet" href="{{ url_for('.static', filename=filename) }}" media="screen">
 	<!-- <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/layout.css') }}" /> -->
 	<!-- End Skeleton -->
 
@@ -58,7 +64,7 @@
 
 </head>
 <body>
-	<div id="content" class="container">
+	<div class="content container">
 		{% block content %}{% endblock %}
 		<footer class="sixteen columns">
 			{% autoescape off %}

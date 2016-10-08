@@ -1,0 +1,75 @@
+
+/* Light theme (default)
+================================================================*/
+
+body {
+  background-color: #fdfdfd;
+  color: #073642;
+}
+
+code,
+pre {
+  background-color: #f1f1f1;
+  color: #002b36;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #002b36;
+}
+
+.subheader {
+  color: #657b83;
+}
+
+strong {
+  color: #333;
+}
+
+a,
+a:visited {
+  color: #268bd2;
+}
+
+a:hover,
+a:focus {
+  background-color: #eee8d5;
+  color: #268bd2;
+}
+
+footer {
+  border-top: 1px solid #d8d7d7;
+}
+
+/* Tables
+================================================================*/
+
+tbody tr:nth-child(odd) {
+  background-color: #f6f6f6;
+}
+
+tbody tr:nth-child(even) td {
+  border-bottom: 2px solid #eee;
+}
+
+th {
+  background-color: #eee;
+  border-bottom: 2px solid #ccc;
+}
+
+td,
+th {
+  border-right: 2px solid #fff;
+}
+
+td {
+  border-bottom: 2px solid #fff;
+}
+
+.all-preview {
+  border: 1px solid #00f;
+}

@@ -31,33 +31,44 @@
 		<div class="four columns">
 			<label for="colourpicker">Preview colour:</label>
 				<input type="color" name="colourpicker" id="colourpicker">
-				<button id="resetColour">Reset colour</button>
+				<button id="reset-colour">Reset colour</button>
 		</div>
 		<div class="four columns">
-			<label for="toggleBackground">
-				<input type="checkbox" name="toggleBackground" id="toggleBackground" checked>
+			<label for="toggle-background">
+				<input type="checkbox" name="toggle-background" id="toggle-background" checked>
 				Light background
 			</label>
 		</div>
 	</div>
-		<!-- <a href="" id="resetColour">Reset colour</a> -->
+		<!-- <a href="" id="reset-colour">Reset colour</a> -->
 
 	<script>
   // Template URL for preview
 	var previewURL = "{{ url_for('get_icon', font='FONT', colour='COLOUR', character='CHARACTER') }}";
-
+	var currentTheme = $.cookie('theme');
+	var themeRoot = "{{ url_for('.static', filename='css/') }}";
 	// Set background colour to dark/light
-	function setBackground(style) {
-		if ( style == 'light' ) {
-			$( 'body' ).removeClass( 'dark' );
-			$.cookie('backgroundStyle', 'light', { 'path': '/' });
-			$( '#toggleBackground' ).prop( 'checked', true );
-		} else {
-			$( 'body' ).addClass( 'dark' );
-			$.cookie('backgroundStyle', 'dark', { 'path': '/' });
-			$( '#toggleBackground' ).prop( 'checked', false );
+	function setTheme(theme) {
+		var url = themeRoot + theme + '.css';
+		if ( theme != currentTheme ) {
+			console.log('Changing theme to :' + theme);
+			$.cookie('theme', theme, { 'path': '/' });
+			$('#theme').attr('href', url);
+			currentTheme = theme;
 		}
-		console.log('set backgroundStyle = ' + style );
+		/*
+		if ( style == 'light' ) {
+			// $( 'body' ).removeClass( 'dark' );
+			$.cookie('theme', 'light', { 'path': '/' });
+			$( '#toggle-background' ).prop( 'checked', true );
+		} else {
+			// $( 'body' ).addClass( 'dark' );
+			$.cookie('theme', 'dark', { 'path': '/' });
+			$( '#toggle-background' ).prop( 'checked', false );
+			{# $( 'head' ).append( '<link id="dark-theme" rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/dark.css') }}">' ); #}
+		}
+		console.log('set theme = ' + style );
+		*/
 	}
 
 	// Set a new preview colour
@@ -68,8 +79,8 @@
 
 			$("span.preview").css("color", cssColour);
 
-			if ( $("#resetColour").prop("disabled") ) {
-				$("#resetColour").prop("disabled", false);
+			if ( $("#reset-colour").prop("disabled") ) {
+				$("#reset-colour").prop("disabled", false);
 			}
 
 			// Change preview links
@@ -83,10 +94,10 @@
 	};
 
 	// Reset picker, preview colours and preview links
-	$("#resetColour").click(function() {
+	$("#reset-colour").click(function() {
 		$("#colourpicker").spectrum("set", "#444");
 		changePreviewColour('#444');
-		setBackground('light');
+		setTheme('light');
 	});
 
 	/****************************************************************************
@@ -102,7 +113,7 @@
 			console.log( i + ' = ' + cookies[i] );
 		}
 
-		var backgroundStyle = $.cookie( 'backgroundStyle' );
+		var theme = $.cookie( 'theme' );
 		var previewColour = $.cookie('previewColour' );
 
 		if ( ! previewColour ) {
@@ -110,29 +121,29 @@
 		}
 
 		console.log( 'previewColour < ' + previewColour );
-		console.log('backgroundStyle < ' + backgroundStyle );
+		console.log('theme < ' + theme );
 
-		if ( backgroundStyle == 'dark' ) {
-			$( "#toggleBackground" ).prop( 'checked', false );
-			$( 'body' ).addClass( 'dark' );
-			console.log( 'theme set to dark' );
+		if ( theme == 'dark' ) {
+			$( "#toggle-background" ).prop( 'checked', false );
+			// $( 'body' ).addClass( 'dark' );
 		}
+		// console.log( 'theme set to dark' );
 
 
 		/**************************************************************************
 			Add callbacks
 		**************************************************************************/
 
-		$( "#toggleBackground" ).change(function() {
-			$( "body" ).toggleClass( "dark" );
+		$( "#toggle-background" ).change(function() {
+			// $( "body" ).toggleClass( "dark" );
 			if ( this.checked ) {  // light background
-				setBackground( 'light' );
+				setTheme( 'light' );
 			} else {
-				setBackground( 'dark' );
+				setTheme( 'dark' );
 			}
 		});
 
-		$("#resetColour").prop("disabled", true);
+		$("#reset-colour").prop("disabled", true);
 
 		$("#colourpicker").spectrum({
 			color: previewColour,

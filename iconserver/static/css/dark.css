@@ -1,0 +1,78 @@
+/* Dark theme
+================================================================*/
+
+body {
+  color: #d1d1d1;
+  background-color: #222;
+}
+
+code,
+pre {
+  background-color: #333;
+  color: #e1e1e1;
+}
+
+hr {
+  border-color: #444;
+}
+
+footer {
+  border-top: 1px solid #444;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #fdf6e3;
+}
+
+.subheader {
+  color: #93a1a1;
+}
+
+strong {
+  color: #eeeeee;
+}
+
+a,
+a:visited {
+  color: #268bd2;
+}
+
+a:hover,
+a:focus {
+  background-color: #444;
+  color: #268bd2;
+}
+
+/* Tables
+================================================================*/
+
+tbody tr:nth-child(odd) {
+  background-color: #333;
+}
+
+tbody tr:nth-child(even) td {
+  border-bottom: 2px solid #444;
+}
+
+th {
+  background-color: #444;
+  border-bottom: 2px solid #666;
+}
+
+td,
+th {
+  border-right: 2px solid #222;
+}
+
+td {
+  border-bottom: 2px solid #222;
+}
+
+.all-preview {
+  border: 1px solid #00f;
+}

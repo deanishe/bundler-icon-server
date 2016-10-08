@@ -15,7 +15,7 @@
 	{% for item in row %}
 		{% if item %}
 		<td>
-			<img src="{{ url_for('get_icon', font=item[0], colour=colour, character=item[1]) }}" alt="{{ item[1] }}" title="{{ item[1] }}" class="allPreview">
+			<img src="{{ url_for('get_icon', font=item[0], colour=colour, character=item[1]) }}" alt="{{ item[1] }}" title="{{ item[1] }}" class="all-preview">
 		</td>
 		{% endif %}
 	{% endfor %}

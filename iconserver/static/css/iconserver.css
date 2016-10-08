@@ -1,211 +1,129 @@
 
-div#content {
-	margin-top: 40px;
-	margin-bottom: 60px;
+.content {
+  margin-top: 40px;
+  margin-bottom: 60px;
 }
 
 span.preview {
-	display: inline-block;
-	width: 60px;
-	height: 60px !important;
+  display: inline-block;
+  height: 60px;
+  width: 60px;
 }
 
-pre, code {
-	font-family: "Source Code Pro", "Monaco", "Courier New", monospace;
+code,
+pre {
+  font-family: "Source Code Pro", "Monaco", "Courier New", monospace;
 }
 
 pre {
-	overflow: scroll;
+  overflow: scroll;
 }
 
 nav {
-	position: fixed;
-	width: 120px;
+  position: fixed;
+  width: 120px;
 }
 
-nav ul {
-	margin-bottom: 0;
+nav>ul {
+  margin-bottom: 0;
 }
 
-nav ul li {
-	display: block;
-	margin: 10px 0;
+nav>ul>li {
+  display: block;
+  margin: 10px 0;
 }
 
 footer {
-	text-align: center;
-	border-top: 1px solid #d8d7d7;
-	font-size: 10px;
-	padding-top: 4px;
+  font-size: 10px;
+  padding-top: 4px;
+  text-align: center;
 }
 
-div.errorMsg {
-	text-align: center;
+.error-msg {
+  text-align: center;
 }
 
-div.result span.preview {
-	float: left;
+.result>.preview {
+  float: left;
 }
 
-div.result div.title {
-	float: left;
+.result>.title {
+  float: left;
 }
 
-input[type=search] {
-	font-size: 150%;
+[type=search] {
+  font-size: 150%;
 }
 
-/* Light theme (default)
-================================================================*/
-
-body {
-	color: #073642;
-	background-color: #fff;
+a,
+a:visited {
+  text-decoration: underline;
 }
 
-pre, code {
-	background-color: #f1f1f1;
-	color: #002b36;
-}
-
-
-h1, h2, h3, h4, h5, h6 {
-	color: #002b36;
-}
-.subheader {
-	color: #657b83;
-}
-
-a, a:visited {
-	color: #268bd2;
-	text-decoration: underline;
-	outline: 0;
-}
-a:hover, a:focus {
-	background-color: #eee8d5;
-	color: #268bd2;
-}
-
-
-/* Dark theme
-================================================================*/
-
-body.dark {
-	color: #eee8d5;
-	/*background-color: #002b36;*/
-	background-color: #222;
-}
-
-body.dark pre, body.dark code {
-	background-color: #073642;
-}
-
-body.dark hr {
-	border-color: #444;
-}
-
-body.dark h1,
-body.dark h2,
-body.dark h3,
-body.dark h4,
-body.dark h5,
-body.dark h6 {
-	color: #fdf6e3;
-}
-body.dark .subheader {
-	color: #93a1a1;
-}
-
-body.dark a,
-body.dark a:visited {
-	color: #b58900;
-	text-decoration: underline;
-	outline: 0;
-}
-body.dark a:hover, body.dark a:focus {
-	background-color: #111;
-	color: #cb4b16;
+a:focus {
+  outline: 0;
 }
 
 /* Tables
 ================================================================*/
 
 table {
-	border-collapse: collapse;
+  border-collapse: collapse;
 }
 
-tbody tr:nth-child(odd) {
-	background-color: #f6f6f6;
-}
-
-tbody tr:nth-child(even) td {
-	border-bottom: 2px solid #eee;
-}
-
-th, td {
-	padding: 5px 8px;
-	border-right: 2px solid #fff;
-	text-align: left;
+th,
+td {
+  padding: 5px 8px;
+  text-align: left;
 }
 
 th {
-	font-weight: bold;
-	background-color: #eee;
-	border-bottom: 2px solid #ccc;
-}
-
-td {
-	border-bottom: 2px solid #fff;
-}
-
-img.allPreview {
-	border: 1px solid blue;
+  font-weight: bold;
 }
 
 /* System icons preview */
 
-table#system-preview tbody tr td {
-	text-align: center;
+.system-preview tbody tr td {
+  text-align: center;
 }
 
-table#system-preview tbody tr td:first-child {
-	text-align: left;
+.system-preview tbody tr td:first-child {
+  text-align: left;
 }
 
 /* Mobile
 ================================================================*/
 
-	/* Mobile/Browser */
+/* Mobile/Browser */
 @media only screen and (max-width: 767px) {
-	nav {
-		display: none;
-	}
+  nav {
+    display: none;
+  }
 }
 
-	/* Mobile Landscape/Browser */
+/* Mobile Landscape/Browser */
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 }
 
-	/* Anything smaller than standard 960 */
+/* Anything smaller than standard 960 */
 @media only screen and (max-width: 959px) {
 }
 
-
-	/* iPad Portrait Only */
+/* iPad Portrait Only */
 @media only screen and (min-width: 768px) and (max-width: 959px) and (max-device-width: 1000px) {
 }
 
-	/* Mobile Only */
+/* Mobile Only */
 @media only screen and (max-width: 767px) and (max-device-width: 1000px) {
 }
 
-	/* Mobile Landscape Only */
+/* Mobile Landscape Only */
 @media only screen and (min-width: 480px) and (max-width: 767px) and (max-device-width: 1000px) {
 }
 
-	/* Anything smaller than standard 960 on a device */
+/* Anything smaller than standard 960 on a device */
 @media only screen and (max-width: 959px) and (max-device-width: 1000px) {
-    .resize {
-        display: none;
-    }
+  .resize {
+    display: none;
+  }
 }
