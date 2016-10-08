@@ -108,7 +108,19 @@ Call it with `extra/purge_cache.py path/to/icon/cache/directory` (by default `ic
 
 It will delete the least recently-accessed icons and then remove any empty directories.
 
-## Licence, Thanks ##
+
+## Icon fonts ##
+
+The following fonts are included with the server:
+
+- [Elusive Icons][elusive-icons]
+- [Font Awesome][font-awesome]
+- [Typicons][typicons]
+
+Some additional fonts, including GitHub's Octicons and Material Design, can be downloaded from the [icon pack repo][icon-packs].
+
+
+## Licence and thanks ##
 
 This code is made available under the [MIT Licence][mit-licence]. The bundled fonts are released under the [SIL Open Font Licence (OFL)][sil-licence].
 
@@ -127,6 +139,7 @@ I've tried several other webfonts with this application with lesser or greater s
 
 [font-awesome]: http://fortawesome.github.io/Font-Awesome/
 [elusive-icons]: https://github.com/aristath/elusive-iconfont
+[icon-packs]: https://github.com/deanishe/bundler-icon-server-iconpacks
 [typicons]: http://typicons.com/
 [mit-licence]: http://opensource.org/licenses/MIT
 [sil-licence]: http://scripts.sil.org/OFL
