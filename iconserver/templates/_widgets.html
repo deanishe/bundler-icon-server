@@ -1,14 +1,16 @@
 
+{# "Back to Home link" #}
 {% macro index_link() %}
-<!-- start index_link -->
-<div class="four columns">
-	<p>
-		<strong><a href="{{ url_for('index') }}">&laquo; Back to Home</a></strong>
-	</p>
-</div>
-<!-- end index_link -->
+	<!-- start index_link -->
+	<div class="four columns">
+		<p>
+			<strong><a href="{{ url_for('index') }}">&laquo; Back to Home</a></strong>
+		</p>
+	</div>
+	<!-- end index_link -->
 {% endmacro %}
 
+{# Icon search form #}
 {% macro search_box(query) %}
 	<!-- start search_box -->
 	<form action="{{ url_for('search') }}" name="search" id="search">
@@ -25,146 +27,256 @@
 	<!-- end search_box -->
 {% endmacro %}
 
-{% macro colour_picker() %}
-	<!-- start colour_picker -->
-	<div class="sixteen columns">
-		<div class="four columns">
-			<label for="colourpicker">Preview colour:</label>
-				<input type="color" name="colourpicker" id="colourpicker">
-				<button id="reset-colour">Reset colour</button>
-		</div>
-		<div class="four columns">
-			<label for="toggle-background">
-				<input type="checkbox" name="toggle-background" id="toggle-background" checked>
-				Light background
-			</label>
-		</div>
+{# Preview icon size selector widget #}
+{% macro icon_size() %}
+	<!-- start icon_size -->
+	<div class="two columns">
+		<label>Icon size
+		{# <input type="number" name="iconsize" id="iconsize" value="{{ config.SIZE }}"> #}
+		{# <input type="text" name="iconsize" id="iconsize" value="{{ config.SIZE }}"> #}
+		<select class="iconsize" name="iconsize" id="iconsize" required>
+			<option value="16">16</option>
+			<option value="32">32</option>
+			<option value="64">64</option>
+			<option value="128" selected>128</option>
+			<option value="256">256</option>
+			<option value="512">512</option>
+			<option value="1024">1024</option>
+		</select>
+		</label>
+		{# <button class="u-pull-left" id="reset-size">Default size</button> #}
 	</div>
-		<!-- <a href="" id="reset-colour">Reset colour</a> -->
 
-	<script>
-  // Template URL for preview
-	var previewURL = "{{ url_for('get_icon', font='FONT', colour='COLOUR', character='CHARACTER') }}";
-	var currentTheme = $.cookie('theme');
-	var themeRoot = "{{ url_for('.static', filename='css/') }}";
-	// Set background colour to dark/light
-	function setTheme(theme) {
-		var url = themeRoot + theme + '.css';
-		if ( theme != currentTheme ) {
-			console.log('Changing theme to :' + theme);
-			$.cookie('theme', theme, { 'path': '/' });
-			$('#theme').attr('href', url);
-			currentTheme = theme;
+	<script type="text/javascript">
+
+		function changePreviewSize( size ) {
+			$.cookie('size', size, { 'path': '/' });
+			console.log( '[iconsize] size > ' + size );
+
+			// $("span.preview").css("color", cssColour);
+
+			if ( $("#reset-size").prop("disabled") ) {
+				$("#reset-size").prop("disabled", false);
+			}
+			$("#iconsize").val(size);
+			$("body").data('size', size);
+
+			updateIconPreviews();
 		}
-		/*
-		if ( style == 'light' ) {
-			// $( 'body' ).removeClass( 'dark' );
-			$.cookie('theme', 'light', { 'path': '/' });
-			$( '#toggle-background' ).prop( 'checked', true );
-		} else {
-			// $( 'body' ).addClass( 'dark' );
-			$.cookie('theme', 'dark', { 'path': '/' });
-			$( '#toggle-background' ).prop( 'checked', false );
-			{# $( 'head' ).append( '<link id="dark-theme" rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/dark.css') }}">' ); #}
-		}
-		console.log('set theme = ' + style );
-		*/
-	}
 
-	// Set a new preview colour
-	function changePreviewColour(cssColour) {
+		$("#reset-size").prop("disabled", true);
 
-			$.cookie('previewColour', cssColour, { 'path': '/' });
-			console.log( 'previewColour > ' + cssColour );
+		// Reset picker, preview colours and preview links
+		$("#reset-size").click(function() {
+			// $("#iconsize").val("{{ config.SIZE }}");
+			changePreviewSize({{ config.SIZE }});
+		});
 
-			$("span.preview").css("color", cssColour);
+		/****************************************************
+		 OnLoad functions
+		*****************************************************/
 
-			if ( $("#reset-colour").prop("disabled") ) {
-				$("#reset-colour").prop("disabled", false);
+		$( document ).ready( function(){
+
+			console.log( '[iconsize] initialising ...' );
+
+			var cookies = $.cookie();
+			// for (var i in cookies ) {
+			// 	console.log( i + ' = ' + cookies[i] );
+			// }
+
+			var size = $.cookie( 'size' );
+
+			if ( ! size ) {
+				var size = '{{ config.SIZE }}';
 			}
 
-			// Change preview links
-			$("a.previewLink").each(function(index) {
-				var url = previewURL.replace('COLOUR', cssColour.replace('#', ''))
-														.replace('CHARACTER', $(this).text())
-														.replace('FONT', $(this).data('font'));
-				$(this).attr('href', url);
+			$( "body" ).data('size', size);
+
+			console.log('[iconsize] size < ' + size );
+
+			// TODO: Update page
+
+			/*************************************************
+				Add callbacks
+			**************************************************/
+
+			$( "#iconsize" ).change(function() {
+				// $( "body" ).toggleClass( "dark" );
+				// var size = this.val();
+				var size = $(this).val();
+				console.log('[iconsize] ' + size);
+				changePreviewSize( size );
 			});
 
-	};
+			/*************************************************
+				Load saved settings
+			**************************************************/
 
-	// Reset picker, preview colours and preview links
-	$("#reset-colour").click(function() {
-		$("#colourpicker").spectrum("set", "#444");
-		changePreviewColour('#444');
-		setTheme('light');
-	});
-
-	/****************************************************************************
-	 OnLoad functions
-	****************************************************************************/
-
-	$( document ).ready( function(){
-
-		console.log( 'initialising ...' );
-
-		var cookies = $.cookie();
-		for (var i in cookies ) {
-			console.log( i + ' = ' + cookies[i] );
-		}
-
-		var theme = $.cookie( 'theme' );
-		var previewColour = $.cookie('previewColour' );
-
-		if ( ! previewColour ) {
-			var previewColour = '#444';
-		}
-
-		console.log( 'previewColour < ' + previewColour );
-		console.log('theme < ' + theme );
-
-		if ( theme == 'dark' ) {
-			$( "#toggle-background" ).prop( 'checked', false );
-			// $( 'body' ).addClass( 'dark' );
-		}
-		// console.log( 'theme set to dark' );
-
-
-		/**************************************************************************
-			Add callbacks
-		**************************************************************************/
-
-		$( "#toggle-background" ).change(function() {
-			// $( "body" ).toggleClass( "dark" );
-			if ( this.checked ) {  // light background
-				setTheme( 'light' );
-			} else {
-				setTheme( 'dark' );
-			}
+			changePreviewSize( size );
+			// changePreviewColour( previewColour );
 		});
 
-		$("#reset-colour").prop("disabled", true);
+	</script>
+	<!-- end icon_size -->
+{% endmacro %}
 
-		$("#colourpicker").spectrum({
-			color: previewColour,
-			showInput: true,
-			chooseText: "Apply",
-			clickoutFiresChange: true,
-			change: function(colour){
-				cssColour = colour.toHexString();
-				console.log( 'new preview colour : ' + cssColour );
-				changePreviewColour( cssColour );
+{# Colour picker widget #}
+{% macro colour_picker() %}
+	<!-- start colour_picker -->
+	<div class="two columns">
+		{# <form action=""> #}
+		<label>Preview colour
+		<input type="color" name="colourpicker" id="colourpicker">
+		</label>
+		{# </form> #}
+	</div>
+	<div class="three columns">
+		<label class="u-pull-left">
+		<input type="checkbox" name="toggle-background" id="toggle-background" checked>
+		Light background
+		</label>
+	</div>
+
+	<script type="text/javascript">
+		// Template URL for preview
+		// var previewURL = "{{ url_for('get_icon', font='FONT', colour='COLOUR', character='CHARACTER', size='SIZE') }}";
+		// var currentTheme = $.cookie('theme');
+		// var themeRoot = "{{ url_for('.static', filename='css/') }}";
+		// Set background colour to dark/light
+		function setTheme(theme) {
+			var url = themeRoot + theme + '.css';
+			if ( theme != currentTheme ) {
+				console.log('Changing theme to :' + theme);
+				$.cookie('theme', theme, { 'path': '/' });
+				$('#theme').attr('href', url);
+				currentTheme = theme;
 			}
+		}
+
+		// Set a new preview colour
+		function changePreviewColour(cssColour) {
+
+				$.cookie('previewColour', cssColour, { 'path': '/' });
+				console.log( '[previewColour] colour > ' + cssColour );
+
+				$("span.preview").css("color", cssColour);
+
+				// if ( $("#reset-colour").prop("disabled") ) {
+				// 	$("#reset-colour").prop("disabled", false);
+				// }
+				$("body").data('colour', cssColour);
+
+				updateIconPreviews();
+		};
+
+		// Reset picker, preview colours and preview links
+		$("#reset-colour").click(function() {
+			$("#colourpicker").spectrum("set", "#444");
+			changePreviewColour('#444');
+			setTheme('light');
 		});
 
-		/**************************************************************************
-			Load saved settings
-		**************************************************************************/
+		/****************************************************
+		 OnLoad functions
+		*****************************************************/
 
-		changePreviewColour( previewColour );
+		$( document ).ready( function(){
 
-	});
+			console.log( '[iconcolour] initialising ...' );
 
-</script>
-<!-- end colour_picker -->
+			var cookies = $.cookie();
+			for (var i in cookies ) {
+				console.log( i + ' = ' + cookies[i] );
+			}
+
+			var theme = $.cookie( 'theme' );
+			var previewColour = $.cookie('previewColour' );
+
+			if ( ! previewColour ) {
+				var previewColour = '#444';
+			}
+
+			console.log( 'previewColour < ' + previewColour );
+			console.log('theme < ' + theme );
+
+			if ( theme == 'dark' ) {
+				$( "#toggle-background" ).prop( 'checked', false );
+				// $( 'body' ).addClass( 'dark' );
+			}
+			// console.log( 'theme set to dark' );
+
+
+			/*************************************************
+				Add callbacks
+			**************************************************/
+
+			$( "#toggle-background" ).change(function() {
+				// $( "body" ).toggleClass( "dark" );
+				if ( this.checked ) {  // light background
+					setTheme( 'light' );
+				} else {
+					setTheme( 'dark' );
+				}
+			});
+
+			$("#reset-colour").prop("disabled", true);
+
+			$("#colourpicker").spectrum({
+				color: previewColour,
+				showInput: true,
+				// showInitial: true,
+				chooseText: "Apply",
+				clickoutFiresChange: true,
+				change: function(colour){
+					cssColour = colour.toHexString();
+					console.log( 'new preview colour : ' + cssColour );
+					changePreviewColour( cssColour );
+				}
+			});
+
+			/*************************************************
+				Load saved settings
+			**************************************************/
+
+			changePreviewColour( previewColour );
+
+		});
+	</script>
+	<!-- end colour_picker -->
+{% endmacro %}
+
+{# Configure icon previews and links #}
+{% macro icon_controls() %}
+	<!-- start preview_controls -->
+	{{ icon_size() }}
+	{{ colour_picker() }}
+	<div class="one column">
+		<button id="reset-icons">defaults</button>
+	</div>
+
+	<script type="text/javascript">
+		// Connect reset button
+		$( document ).ready( function(){
+
+			{% if not config.API_ALLOW_SIZE %}
+				$('#iconsize').prop('disabled', true);
+			{% endif %}
+
+			// console.log( '[reset] initialising ...' );
+			$("#reset-icons").click(function() {
+				var colour="#444",
+					size="{{ config.SIZE }}";
+				console.log('[reset] colour=' + colour + ', size=' + size);
+				// $("body").data('size', size);
+				// $("body").data('colour', colour);
+				// $("#iconsize").val(size);
+				changePreviewColour(colour);
+				changePreviewSize(size);
+				$("#colourpicker").spectrum({color: colour})
+			});
+
+		});
+	</script>
+	<!-- end preview_controls -->
 {% endmacro %}

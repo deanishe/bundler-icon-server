@@ -57,13 +57,37 @@
 	<script type="text/javascript" src="{{ url_for('.static', filename='js/jquery-1.11.1.min.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('.static', filename='js/jquery.cookie.min.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('.static', filename='js/spectrum.js') }}"></script>
-
-		<!-- Custom JavaScript -->
+	<script type="text/javascript">
+		// Defaults
+		var previewURL = "{{ url_for('get_icon', font='FONT', colour='COLOUR', character='CHARACTER', size='SIZE') }}.png";
+		var currentTheme = $.cookie('theme');
+		var themeRoot = "{{ url_for('.static', filename='css/') }}";
+		// Change preview links
+		function updateIconPreviews() {
+			var colour = $("body").data("colour"),
+				size = $("body").data("size");
+			if ( typeof(colour) == "number" ) {
+				colour = colour.toString();
+			}
+			if ( ! size ) {
+				size = "{{ config.SIZE }}";
+			}
+			console.log('[updateIconPreviews] colour=' + colour + ', size=' + size);
+			$("a.previewLink").each(function(index) {
+				var url = previewURL.replace('COLOUR', colour.replace('#', ''))
+									.replace('CHARACTER', $(this).text())
+									.replace('FONT', $(this).data('font'))
+									.replace('SIZE', size);
+				$(this).attr('href', url);
+			});
+		}
+	</script>
+	<!-- Custom JavaScript -->
 	{% block scripts %}{% endblock %}
 	<!-- End custom JavaScript -->
 
 </head>
-<body>
+<body data-size="{{ config.SIZE }}" data-colour="#444">
 	<div class="content container">
 		{% block content %}{% endblock %}
 		<footer class="sixteen columns">

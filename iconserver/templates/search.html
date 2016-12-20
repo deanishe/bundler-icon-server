@@ -22,7 +22,7 @@
 			{{ widgets.search_box(query) }}
 	</div>
 	<div class="sixteen columns">
-			{{ widgets.colour_picker() }}
+			{{ widgets.icon_controls() }}
 	</div>
 	{% if query and results %}
 	<p>{{ results|length }} results</p>
@@ -40,7 +40,7 @@
 				<span class="preview {{ font.cssclass(char) }}"></span>
 				<div class="title">
 					<strong>
-						<a href="{{ url_for('get_icon', font=font['id'], colour='444', character=char) }}" class="previewLink" data-font="{{ font['id'] }}">{{ char }}</a>
+						<a href="{{ url_for('get_icon', font=font['id'], colour='444', character=char, size=config.SIZE) }}.png" class="previewLink" data-colour="444" data-size="{{ config.SIZE }}" data-font="{{ font['id'] }}">{{ char }}</a>
 					</strong>
 					<br/>
 					<a href="{{ url_for('preview', font=font['id']) }}">{{ font['name'] }}</a>

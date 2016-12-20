@@ -8,9 +8,7 @@
 # Created on 2014-06-28
 #
 
-"""
-Generate a PNG of the specified character and font.
-"""
+"""Generate a PNG of the specified character and font."""
 
 from __future__ import unicode_literals
 
@@ -23,17 +21,19 @@ import config
 from icon import Icon
 import fonts
 
+# Match a CSS colour
+css_colour = re.compile(r'^(?:[0-9a-fA-Z]{3}){1,2}$').match
 
-css_colour = re.compile(r'[a-f0-9]+').match
 
-
-########################################################################
-# Error handlers
-########################################################################
+# .d8888b. 88d888b. 88d888b. .d8888b. 88d888b. .d8888b.
+# 88ooood8 88'  `88 88'  `88 88'  `88 88'  `88 Y8ooooo.
+# 88.  ... 88       88       88.  .88 88             88
+# `88888P' dP       dP       `88888P' dP       `88888P'
 
 @app.errorhandler(404)
 @app.errorhandler(500)
 def error_page(error):
+    """Show basic error page."""
     # app.logger.debug('{}\n{}'.format(error.__class__, dir(error)))
     if not hasattr(error, 'code'):
         code = 500
@@ -43,22 +43,26 @@ def error_page(error):
         msg = 'Application error. The administrator has been notified.'
     else:
         msg = error.description
+
     return render_template('error.html', code=code, message=msg), code
 
 
 def error_text(message, status=400):
-    """Return plain text error message. Used for `API` calls"""
+    """Return plain text error message. Used for `API` calls."""
     return Response(message, status, mimetype='text/plain')
 
 
-########################################################################
-# Exported views
-########################################################################
+#          oo
+#
+# dP   .dP dP .d8888b. dP  dP  dP .d8888b.
+# 88   d8' 88 88ooood8 88  88  88 Y8ooooo.
+# 88 .88'  88 88.  ... 88.88b.88'       88
+# 8888P'   dP `88888P' 8888P Y8P  `88888P'
 
 @app.route('/icon/<font>/<colour>/<character>/<size>')
 @app.route('/icon/<font>/<colour>/<character>')
 def get_icon(font, colour, character, size=None):
-    """Redirect to static icon path, creating it first if necessary
+    """Redirect to static icon path, creating it first if necessary.
 
     :param font: ID of the font, e.g. ``fontawesome``
     :param colour: CSS colour without preceding ``#``, e.g. ``000``
@@ -83,35 +87,35 @@ def get_icon(font, colour, character, size=None):
         except ValueError as err:
             return error_text('invalid size : {}'.format(size), 400)
 
-    if not css_colour(colour) or not len(colour) in (3, 6):  # Invalid colour
-        return error_text('Invalid colour: {}'.format(colour), 400)
+    if not css_colour(colour):
+        return error_text('invalid colour: {}'.format(colour), 400)
 
     if len(colour) == 3:  # Expand to full 6 characters
         r, g, b = colour
         colour = '{r}{r}{g}{g}{b}{b}'.format(r=r, g=g, b=b)
 
     if font not in fonts.FONTS:
-        return error_text('Unknown font: {}'.format(font), 404)
+        return error_text('unknown font: {}'.format(font), 404)
 
     if character.lower().endswith('.png'):
         character = character[:-4]
 
     if character not in fonts.FONTS[font]['characters']:
-        return error_text('Unknown character: {}'.format(character), 404)
+        return error_text('unknown character: {}'.format(character), 404)
 
     try:
         icon = Icon(font, colour, character, size)
         return redirect(icon.url)
     except ValueError as err:
         if 'color' in err.message:
-            return error_text('Invalid colour: {}'.format(colour), 400)
+            return error_text('invalid colour: {}'.format(colour), 400)
         # Re-raise error
         raise err
 
 
 @app.route('/preview/<font>')
 def preview(font):
-    """Show preview of all icons/characters available in ``font``"""
+    """Show preview of all icons/characters available in ``font``."""
     font = fonts.FONTS.get(font)
     if font is None:
         abort(404)
@@ -121,7 +125,7 @@ def preview(font):
 
 @app.route('/preview/system')
 def preview_system():
-    """Show preview of system icons"""
+    """Show preview of system icons."""
 
     return render_template('preview-system.html')
 
@@ -129,14 +133,14 @@ def preview_system():
 @app.route('/')
 @app.route('/index')
 def index():
-    """Homepage"""
+    """Homepage."""
     return render_template('index.html', fonts=fonts.FONTS)
 
 
 @app.route('/search')
 @app.route('/search/')
 def search():
-    """Search installed icons"""
+    """Search installed icons."""
     query = request.args.get('query', '')
     results = []
     matched_fonts = set()
@@ -157,8 +161,14 @@ def search():
                            fonts=fonts, matched_fonts=matched_fonts)
 
 
-# Debugging views
-# ----------------------------------------------------------------------
+#       dP          dP
+#       88          88
+# .d888b88 .d8888b. 88d888b. dP    dP .d8888b.
+# 88'  `88 88ooood8 88'  `88 88    88 88'  `88
+# 88.  .88 88.  ... 88.  .88 88.  .88 88.  .88
+# `88888P8 `88888P' 88Y8888' `88888P' `8888P88
+#                                          .88
+#                                      d8888P
 
 @app.route('/all')
 @app.route('/all/<colour>')
@@ -193,7 +203,7 @@ def viewall(colour='444'):
 
 @app.route('/error/<int:errnum>')
 def throwerror(errnum):
-    """Throw the specified error to test server error handling"""
+    """Throw the specified error to test server error handling."""
 
     if not config.DEBUG:
         abort(404)

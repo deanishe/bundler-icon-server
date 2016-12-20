@@ -37,6 +37,8 @@ class Icon(object):
         self.size = size or config.SIZE
         self._ttf = os.path.join(config.FONTDIR, fonts.FONTS[font]['ttf'])
         self._icons = fonts.FONTS[font]['characters']
+        # TODO: font/char/size/colour would be more appropriate cache path
+        # TODO: create subdirectories based on colour[:2], colour[2:4]?
         self._cachepath = os.path.join(
             config.CACHEDIR,
             '{}/{}/{}-{}.png'.format(font, colour, character, self.size))

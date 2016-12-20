@@ -1,13 +1,14 @@
 {% set page_title=font['name'] %}
-
 {% extends 'base.html' %}
 
 {% import '_widgets.html' as widgets %}
+
 
 {% block stylesheets %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/' + font['css']) }}" />
 <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/spectrum.css') }}" />
 {% endblock %}
+
 
 {% block content %}
 <div class="sixteen columns">
@@ -16,11 +17,12 @@
 	View the <a href="{{ font['licence'] }}" target="_blank">licence</a>.
 	</p>
 </div>
+
 <div class="sixteen columns">
 	{{ widgets.index_link() }}
 </div>
 <div class="sixteen columns">
-	{{ widgets.colour_picker() }}
+		{{ widgets.icon_controls() }}
 </div>
 
 <hr/>
