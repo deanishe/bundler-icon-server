@@ -273,7 +273,9 @@
 				// $("#iconsize").val(size);
 				changePreviewColour(colour);
 				changePreviewSize(size);
-				$("#colourpicker").spectrum({color: colour})
+				$("#colourpicker").spectrum({color: colour});
+				$("#toggle-background").prop("checked", true);
+				setTheme("light");
 			});
 
 		});
