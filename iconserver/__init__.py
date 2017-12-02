@@ -11,6 +11,8 @@
 """
 """
 
+from __future__ import print_function, absolute_import
+
 from flask import Flask
 
 import config
@@ -21,12 +23,14 @@ app.config.from_object('config')
 if config.MAX_CACHE_SIZE == 0:
     raise ValueError('Set MAX_CACHE_SIZE in siteconfig.py')
 
+
 from iconserver import views
 
 if not app.debug:
     import logging
     from logging.handlers import RotatingFileHandler, SMTPHandler
 
+    # Refactor mail handling & configuration
     if config.USE_LOCAL_MAIL:
         import subprocess
 

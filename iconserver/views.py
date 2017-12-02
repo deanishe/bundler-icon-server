@@ -12,17 +12,13 @@
 
 from __future__ import unicode_literals
 
-import re
-
 from iconserver import app
+from iconserver.util import css_colour
 from flask import render_template, redirect, Response, abort, request
 
 import config
 from icon import Icon
 import fonts
-
-# Match a CSS colour
-css_colour = re.compile(r'^(?:[0-9a-fA-Z]{3}){1,2}$').match
 
 
 # .d8888b. 88d888b. 88d888b. .d8888b. 88d888b. .d8888b.

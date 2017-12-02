@@ -14,21 +14,20 @@
 from __future__ import print_function, unicode_literals
 
 import os
-import re
 from time import time
 
 from PIL import Image, ImageFont, ImageDraw
 
 from flask import url_for
 from iconserver import app
+from iconserver.util import css_colour
 
 import config
 import fonts
 
 
 class Icon(object):
-
-    css_colour = re.compile(r'[a-fA-F0-9]+').match
+    """Generate icons on demand."""
 
     def __init__(self, font, colour, character, size=None):
         self.font = font
@@ -57,7 +56,7 @@ class Icon(object):
 
         colour = self.colour
         # add hash if colour is CSS format
-        if self.css_colour(colour) and len(colour) in (3, 6):
+        if css_colour(colour):
             colour = '#' + self.colour
 
         # Determine the dimensions of the icon

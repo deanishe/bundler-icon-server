@@ -1,26 +1,54 @@
-# Icon Generator for Alfred Bundler #
+Icon Generator
+==============
 
-This is a backend server for the [Alfred Bundler][alfred-bundler].
+Webservice to generate PNG icons from icon fonts, such as [Font Awesome][font-awesome].
 
-It generates icons from webfonts that contain icons instead of letters, such as [Font Awesome][font-awesome]. (It can of course also generate icons from fonts that contain normal letters.)
+(It can of course also generate icons from fonts that contain normal letters.)
 
 It is built with Python and Flask and designed to run as a WSGI application behind a proper web server.
 
-## Installation ##
+
+<!-- MarkdownTOC autolink="true" bracket="round" depth="3" autoanchor="true" -->
+
+- [Installation](#installation)
+- [Configuration](#configuration)
+  - [Icons](#icons)
+- [API](#api)
+  - [Examples](#examples)
+- [Maintenance](#maintenance)
+- [Icon fonts](#icon-fonts)
+- [Licence and thanks](#licence-and-thanks)
+- [Notes](#notes)
+
+<!-- /MarkdownTOC -->
+
+
+<a name="installation"></a>
+Installation
+------------
 
 Clone the repository and run `setup.sh` in the root directory. This will create the virtualenv and install the necessary dependencies (from `requirements.txt`) with `pip`. **Note**: The [Pillow library][pillow] is required, so please ensure that your system has [the libraries required][pillow-install] to compile Pillow. (The `*-dev` libraries can be removed after installation.)
 
-## Configuration ##
+
+<a name="configuration"></a>
+Configuration
+-------------
 
 After installation you **must** edit `siteconfig.py`. This file is not included in the repo, but is created by `setup.sh` (a copy of `siteconfig.sample.py`. It overrides the settings in `config.py`. At minimum, you must override `MAX_CACHE_SIZE` to a non-zero number, or the application will not run.
 
+
+<a name="icons"></a>
+### Icons ###
+
 The server includes the [Font Awesome][font-awesome], [Elusive Icons][elusive-icons] and [Typicons][typicons] fonts and corresponding JSON configuration files and CSS files.
+
+Additional icon font packages are available in the [iconpacks][icon-packs] repo.
 
 To add a new font, add the webfont files (TTF, WOFF etc.) to the `iconserver/static/fonts` directory, the CSS file for the webfont (which defines the classes for each icon/character) to `iconserver/static/css` and create a corresponding JSON configuration file in `/fonts`.
 
 Such a configuration file looks like this:
 
-```
+```javascript
 {
  "id": "fontawesome",
   "name": "Font Awesome",
@@ -40,8 +68,7 @@ Such a configuration file looks like this:
     "ambulance": "f0f9",
     "anchor": "f13d",
     "android": "f17b",
-    …
-    …
+    // etc.
   }
 }
 ```
@@ -66,6 +93,7 @@ To make it a little easier, you can instead generate a TSV file with each line c
 
 In most cases, the CSS file for the font will need editing to set the `font-size` to `48px`. The `line-height` attribute may also need changing. See the included CSS files for examples.
 
+<a name="api"></a>
 ## API ##
 
 The API is very simple:
@@ -91,6 +119,7 @@ If `CACHEDIR` and `CACHEURL` are specified, they will be used thus: `(CACHEDIR|C
 
 All arguments are converted to lowercase and the colour is normalised to the 6-character form to ensure each icon is only generated and cached once.
 
+<a name="examples"></a>
 ### Examples ###
 
 ```
@@ -100,6 +129,7 @@ http://www.example.com/icon/elusive/010101/briefcase
 http://www.example.com/icon/elusive/000/podcast/1024
 ```
 
+<a name="maintenance"></a>
 ## Maintenance ##
 
 The application itself does not monitor or manage the cache size, but the `extra/purge_cache.py` script will reduce the size of the icon cache to 50% of the `MAX_CACHE_SIZE` you've specified in `siteconfig.py`, preferentially deleting the least recently-accessed icons.
@@ -109,6 +139,7 @@ Call it with `extra/purge_cache.py path/to/icon/cache/directory` (by default `ic
 It will delete the least recently-accessed icons and then remove any empty directories.
 
 
+<a name="icon-fonts"></a>
 ## Icon fonts ##
 
 The following fonts are included with the server:
@@ -120,6 +151,7 @@ The following fonts are included with the server:
 Some additional fonts, including GitHub's Octicons and Material Design, can be downloaded from the [icon pack repo][icon-packs].
 
 
+<a name="licence-and-thanks"></a>
 ## Licence and thanks ##
 
 This code is made available under the [MIT Licence][mit-licence]. The bundled fonts are released under the [SIL Open Font Licence (OFL)][sil-licence].
@@ -132,6 +164,7 @@ It goes without saying that this app would be both pointless and impossible with
 | [Font Awesome][font-awesome]   | Dave Gandy              |
 | [Typicons][typicons]           | Stephen Hutchings       |
 
+<a name="notes"></a>
 ## Notes ##
 
 I've tried several other webfonts with this application with lesser or greater success. [Entypo/Entypo Social](http://www.entypo.com/) in particular do not work.

@@ -11,7 +11,7 @@
 """
 """
 
-from __future__ import print_function, unicode_literals
+from __future__ import print_function
 
 import sys
 import os
@@ -40,17 +40,17 @@ class Font(dict):
 
     @classmethod
     def from_json(self, path):
-        """Create and return `Font` instance from JSON file at `path`"""
+        """Create and return `Font` instance from JSON file at `path`."""
         with open(path, 'rb') as file:
             return Font(json.load(file))
 
     def unicode_char(self, name):
-        """Return a Unicode character for character named `name`"""
-        escaped = '\\u{}'.format(self['characters'][name])
+        """Return a Unicode character for character named `name`."""
+        escaped = u'\\u{}'.format(self['characters'][name])
         return unicodify(escaped)
 
     def cssclass(self, name):
-        """Return CSS class for character with name `name`"""
+        """Return CSS class for character with name `name`."""
         return self['cssclass'].format(name=name)
 
 
